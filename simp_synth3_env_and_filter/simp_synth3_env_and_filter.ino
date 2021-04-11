@@ -5,31 +5,51 @@
 #include <SerialFlash.h>
 
 // GUItool: begin automatically generated code
-AudioSynthNoisePink      pink1;          //xy=66,315
-AudioSynthWaveform       waveform3;      //xy=81,258
-AudioSynthWaveform       waveform1;      //xy=83,141
-AudioSynthWaveform       waveform2;      //xy=83,201
-AudioSynthWaveformDc     dc1;            //xy=175,438
-AudioMixer4              mixer1;         //xy=266,233
-AudioEffectEnvelope      envelope2; //xy=329,377
-AudioEffectEnvelope      envelope1;      //xy=357,137
-AudioFilterStateVariable filter1;        //xy=509,235
-AudioEffectFreeverb      freeverb1;      //xy=618,306
-AudioMixer4              mixer2; //xy=641,151
-AudioOutputAnalog        dac1;           //xy=721,230
-AudioConnection          patchCord1(pink1, 0, mixer1, 3);
-AudioConnection          patchCord2(waveform3, 0, mixer1, 2);
-AudioConnection          patchCord3(waveform1, 0, mixer1, 0);
-AudioConnection          patchCord4(waveform2, 0, mixer1, 1);
-AudioConnection          patchCord5(dc1, envelope2);
-AudioConnection          patchCord6(mixer1, envelope1);
-AudioConnection          patchCord7(envelope2, 0, filter1, 1);
-AudioConnection          patchCord8(envelope1, 0, filter1, 0);
-AudioConnection          patchCord9(filter1, 0, freeverb1, 0);
-AudioConnection          patchCord10(filter1, 0, mixer2, 0);
-AudioConnection          patchCord11(freeverb1, 0, mixer2, 1);
-AudioConnection          patchCord12(mixer2, dac1);
+AudioAmplifier           amp4; //xy=60.000003814697266,302.50000381469727
+AudioAmplifier           amp3; //xy=61.25,263.75000381469727
+AudioAmplifier           amp5; //xy=61.25,343.75
+AudioAmplifier           amp2; //xy=62.5,217.5
+AudioAmplifier           amp1;           //xy=65.50000762939453,169.25000190734863
+AudioSynthWaveformSine   sine1;          //xy=75.00000381469727,118.50000190734863
+AudioSynthNoisePink      pink1;          //xy=221.00000381469727,378.7500009536743
+AudioSynthWaveformModulated waveformMod3; //xy=242.25000381469727,302.00000381469727
+AudioSynthWaveformModulated waveformMod1;   //xy=243.00000381469727,202.75000095367432
+AudioSynthWaveformModulated waveformMod2; //xy=246.00000381469727,250.75000095367432
+AudioSynthWaveformDc     dc1;            //xy=330.00000381469727,501.7500009536743
+AudioMixer4              mixer1;         //xy=421.00000381469727,296.7500009536743
+AudioEffectEnvelope      envelope2; //xy=484.00000381469727,440.7500009536743
+AudioEffectEnvelope      envelope1;      //xy=512.0000038146973,200.75000095367432
+AudioMixer4              mixer3; //xy=610,492.5
+AudioFilterStateVariable filter1;        //xy=664.0000038146973,298.7500009536743
+AudioEffectFreeverb      freeverb1;      //xy=773.0000038146973,369.7500009536743
+AudioMixer4              mixer2; //xy=796.0000038146973,214.75000095367432
+AudioOutputAnalog        dac1;           //xy=876.0000038146973,293.7500009536743
+AudioConnection          patchCord1(amp4, 0, waveformMod2, 1);
+AudioConnection          patchCord2(amp3, 0, waveformMod3, 0);
+AudioConnection          patchCord3(amp5, 0, waveformMod3, 1);
+AudioConnection          patchCord4(amp2, 0, waveformMod2, 0);
+AudioConnection          patchCord5(amp1, 0, waveformMod1, 0);
+AudioConnection          patchCord6(sine1, amp1);
+AudioConnection          patchCord7(sine1, amp2);
+AudioConnection          patchCord8(sine1, amp3);
+AudioConnection          patchCord9(sine1, amp4);
+AudioConnection          patchCord10(sine1, amp5);
+AudioConnection          patchCord11(sine1, 0, mixer3, 1);
+AudioConnection          patchCord12(pink1, 0, mixer1, 3);
+AudioConnection          patchCord13(waveformMod3, 0, mixer1, 2);
+AudioConnection          patchCord14(waveformMod1, 0, mixer1, 0);
+AudioConnection          patchCord15(waveformMod2, 0, mixer1, 1);
+AudioConnection          patchCord16(dc1, envelope2);
+AudioConnection          patchCord17(mixer1, envelope1);
+AudioConnection          patchCord18(envelope2, 0, mixer3, 0);
+AudioConnection          patchCord19(envelope1, 0, filter1, 0);
+AudioConnection          patchCord20(mixer3, 0, filter1, 1);
+AudioConnection          patchCord21(filter1, 0, freeverb1, 0);
+AudioConnection          patchCord22(filter1, 0, mixer2, 0);
+AudioConnection          patchCord23(freeverb1, 0, mixer2, 1);
+AudioConnection          patchCord24(mixer2, dac1);
 // GUItool: end automatically generated code
+
 
 
 
@@ -37,6 +57,7 @@ AudioConnection          patchCord12(mixer2, dac1);
 
 ///////////////////////////////////////////////
 //CONSTANTS
+///////////////////////////////////////////////
 
 #define DEBUG_ENABLE
 
@@ -67,6 +88,15 @@ const byte CTRL_VCF_R = 116;
 const byte CTRL_VCF_AMNT = 117;
 
 
+const byte CTRL_LFO_F = 118;
+const byte CTRL_LFO_A = 119;
+const byte CTRL_LFO_FMOD1 = 120;
+const byte CTRL_LFO_FMOD2 = 121;
+const byte CTRL_LFO_FMOD3 = 122;
+const byte CTRL_LFO_SMOD2 = 123;
+const byte CTRL_LFO_SMOD3 = 124;
+const byte CTRL_LFO_VCFMOD = 125;
+
 const float VCF_SCALE = 10000;
 const int VCF_MAX = 127;
 
@@ -74,10 +104,47 @@ const int VCF_MAX = 127;
 float midiLookUp[127];
 
 ///////////////////////////////////////////////
+//globals
+///////////////////////////////////////////////
 byte lastNote=0;
 
 byte lastValidVcfCutoff=0;
 byte lastValidVcfAmmount=0;
+
+
+
+///////////////////////////////////////////////
+//Helper functions
+///////////////////////////////////////////////
+void setAllOscFreq(float f){    
+    waveformMod1.frequency(f);
+    waveformMod2.frequency(f);
+    waveformMod3.frequency(f);
+}
+
+
+//AMMOUNT + CUTOFF cannot exceed MAX or filter gets noizy
+void filterSetFreqFromVal(byte val){
+    if ((int)val + (int) lastValidVcfAmmount > VCF_MAX) {
+        val = VCF_MAX - lastValidVcfAmmount;
+    }
+    filter1.frequency(VCF_SCALE * (float)val / 127.0);
+    lastValidVcfCutoff = val;
+}
+
+void filterSetAmmountFromVal(byte val){
+    if ((int)val + (int) lastValidVcfCutoff > VCF_MAX) {
+        val = VCF_MAX - lastValidVcfCutoff;
+    }
+    dc1.amplitude((float)val / 127.0);
+    lastValidVcfAmmount = val;
+}
+
+
+
+///////////////////////////////////////////////
+//CALLBACKS
+///////////////////////////////////////////////
 
 
 //with this scheme we get a new envelope every time a new note is hit,
@@ -169,8 +236,36 @@ void ctrlChange(byte ch, byte ctrl, byte val){
             mixer2.gain(0,1.0- (float)val/127.0);
             break;
 
+            
+        case CTRL_LFO_A:
+            sine1.amplitude(((float)val)/127.0);
+            break;
+        case CTRL_LFO_F:
+            sine1.frequency(60 * ((float)val)/127.0);
+            break;     
+            
+        case CTRL_LFO_FMOD1:
+            amp1.gain(((float)val)/127.0 );
+            break;  
+        case CTRL_LFO_FMOD2:
+            amp2.gain(((float)val)/127.0 );
+            break;    
+        case CTRL_LFO_FMOD3:
+            amp3.gain(((float)val)/127.0 );
+            break;    
+            
+        case CTRL_LFO_SMOD2:
+            amp4.gain(((float)val)/127.0 );
+            break;    
+        case CTRL_LFO_SMOD3:
+            amp5.gain(((float)val)/127.0 );
+            break; 
+                  
+        case CTRL_LFO_VCFMOD:
+            mixer3.gain(1,((float)val)/127.0 );
+            break; 
 
-                        
+            
         default:
 #ifdef DEBUG_ENABLE
             Serial.println("default switch");
@@ -197,32 +292,9 @@ void initLookupTable(){
 
 
 
-
-
-void setAllOscFreq(float f){    
-    waveform1.frequency(f);
-    waveform2.frequency(f);
-    waveform3.frequency(f);
-}
-
-
-//AMMOUNT + CUTOFF cannot exceed MAX or filter gets noizy
-void filterSetFreqFromVal(byte val){
-    if ((int)val + (int) lastValidVcfAmmount > VCF_MAX) {
-        val = VCF_MAX - lastValidVcfAmmount;
-    }
-    filter1.frequency(VCF_SCALE * (float)val / 127.0);
-    lastValidVcfCutoff = val;
-}
-
-void filterSetAmmountFromVal(byte val){
-    if ((int)val + (int) lastValidVcfCutoff > VCF_MAX) {
-        val = VCF_MAX - lastValidVcfCutoff;
-    }
-    dc1.amplitude((float)val / 127.0);
-    lastValidVcfAmmount = val;
-}
-
+///////////////////////////////////////////////
+//SETUP / LOOP
+///////////////////////////////////////////////
 
 
 void setup() {
@@ -240,20 +312,20 @@ void setup() {
     float default_amp = .25;
     float default_pw = .15;
     
-    waveform1.begin(WAVEFORM_SAWTOOTH);    
-    waveform1.frequency(default_freq);
-    waveform1.amplitude(default_amp);
-    waveform1.pulseWidth(default_pw);
+    waveformMod1.begin(default_amp,default_freq, WAVEFORM_SAWTOOTH);    
+//    waveformMod1.frequency(default_freq);
+//    waveformMod1.amplitude(default_amp);
+//    waveformMod1.pulseWidth(default_pw);
 
-    waveform2.begin(WAVEFORM_SQUARE);    
-    waveform2.frequency(default_freq);
-    waveform2.amplitude(default_amp);
-    waveform2.pulseWidth(default_pw);
+    waveformMod2.begin(default_amp, default_freq, WAVEFORM_PULSE);    
+//    waveformMod2.frequency(default_freq);
+//    waveformMod2.amplitude(default_amp);
+//    waveformMod2.pulseWidth(default_pw);
 
-    waveform3.begin(WAVEFORM_SINE);    
-    waveform3.frequency(default_freq);
-    waveform3.amplitude(default_amp);
-    waveform3.pulseWidth(default_pw);
+    waveformMod3.begin(default_amp, default_freq ,WAVEFORM_TRIANGLE_VARIABLE);    
+//    waveformMod3.frequency(default_freq);
+//    waveformMod3.amplitude(default_amp);
+//    waveformMod3.pulseWidth(default_pw);
     
 
     pink1.amplitude(default_amp);
@@ -288,18 +360,24 @@ void setup() {
     mixer2.gain(2 , 0.0);
     mixer2.gain(3 , 0.0);
 
+    mixer3.gain(0 , 1.0);
+    mixer3.gain(1 , 0.0);
+    mixer3.gain(2 , 0.0);
+    mixer3.gain(3 , 0.0);
 
+    //LFO
+    sine1.frequency(1.0);
+    sine1.amplitude(0.0);
+    amp1.gain(0.0);
+    amp2.gain(0.0);
+    amp3.gain(0.0);
+    amp4.gain(0.0);
+    amp5.gain(0.0);
 
-    //freeverbs1.roomsize(0.0);
-    //freeverbs1.damping(1.0);
-
-    //envelope2.sustain(1.0);
 
     initLookupTable();
 
 }
-
-
 
 
 
