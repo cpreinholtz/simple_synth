@@ -11,14 +11,19 @@ AudioSynthWaveform       waveform1;      //xy=83,141
 AudioSynthWaveform       waveform2;      //xy=83,201
 AudioMixer4              mixer1;         //xy=266,233
 AudioEffectEnvelope      envelope1;      //xy=357,137
+AudioSynthWaveformDc     dc1;            //xy=365,325
+AudioFilterStateVariable filter1;        //xy=509,235
 AudioOutputAnalog        dac1;           //xy=721,230
 AudioConnection          patchCord1(pink1, 0, mixer1, 3);
 AudioConnection          patchCord2(waveform3, 0, mixer1, 2);
 AudioConnection          patchCord3(waveform1, 0, mixer1, 0);
 AudioConnection          patchCord4(waveform2, 0, mixer1, 1);
 AudioConnection          patchCord5(mixer1, envelope1);
-AudioConnection          patchCord6(envelope1, dac1);
+AudioConnection          patchCord6(envelope1, 0, filter1, 0);
+//AudioConnection          patchCord7(dc1, 0, filter1, 1);
+AudioConnection          patchCord8(filter1, 0, dac1, 0);
 // GUItool: end automatically generated code
+
 
 
 
@@ -83,25 +88,31 @@ void ctrlChange(byte ch, byte ctrl, byte val){
 
 
         case CTRL_MASTER_FREQ: 
-            Serial.println("setting note to ");
-            float f = midiLookUp[val];
-
-
+#ifdef DEBUG_ENABLE
             Serial.println("setting note to ");
             Serial.println(val);
-            Serial.println(f);
-
+            Serial.println(midiLookUp[val]);
+#endif
             setAllOscFreq(midiLookUp[val]);
             allNoteOn();
             delay(10);
             allNoteOff();            
             break;
+
+
+        case CTRL_FILT_CUTOFF:
+#ifdef DEBUG_ENABLE
+            Serial.println("cutoff");
+            Serial.println(val);
+            Serial.println(((float)val)/127.0);
+#endif       
+            dc1.amplitude(((float)val)/127.0);
+            filter1.frequency( 10000 * ((float)val)/ 127.0 );
+            break;
             
         default:
 #ifdef DEBUG_ENABLE
             Serial.println("default switch");
-            Serial.println(val);
-            Serial.println(f);
 #endif       
             break;
             
@@ -191,7 +202,7 @@ void setup() {
     //mixer2.gain(2 , 0.0);
     //mixer2.gain(3 , 0.0);
 
-    //dc1.amplitude(1.0);
+    dc1.amplitude(1.0);
 
     //freeverbs1.roomsize(0.0);
     //freeverbs1.damping(1.0);
