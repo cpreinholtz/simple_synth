@@ -47,6 +47,27 @@ const byte CTRL_FILT_MIX = 105;
 float midiLookUp[127];
 
 ///////////////////////////////////////////////
+byte lastNote;
+//with this scheme we get a new envelope every time a new note is hit,
+//and the envelope realses only when that new note is released
+void handleNoteOn(byte channel, byte note, byte velocity){
+    Serial.println("note on");
+    setAllOscFreq(midiLookUp[note]);
+    envelope1.noteOn();
+    lastNote = note;
+}
+
+
+void handleNoteOff(byte channel, byte note, byte velocity){
+    Serial.println("note off");
+    if (note == lastNote){
+        envelope1.noteOff();
+    }
+}
+
+
+
+
 
 void ctrlChange(byte ch, byte ctrl, byte val){
 #ifdef DEBUG_ENABLE
@@ -94,9 +115,7 @@ void ctrlChange(byte ch, byte ctrl, byte val){
             Serial.println(midiLookUp[val]);
 #endif
             setAllOscFreq(midiLookUp[val]);
-            allNoteOn();
-            delay(10);
-            allNoteOff();            
+         
             break;
 
 
@@ -144,14 +163,8 @@ void setAllOscFreq(float f){
     waveform3.frequency(f);
 }
 
-void allNoteOn(){
-    envelope1.noteOn();
-    //envelope2.noteOn();
-}
-void allNoteOff(){
-    envelope1.noteOff();
-    //envelope2.noteOff();
-}
+
+
 
 
 void setup() {
@@ -161,6 +174,8 @@ void setup() {
     Serial.begin(9600);
 #endif
     usbMIDI.setHandleControlChange(ctrlChange);
+    usbMIDI.setHandleNoteOn(handleNoteOn);
+    usbMIDI.setHandleNoteOff(handleNoteOff);
     AudioMemory(20);
 
     int default_freq = 200;
@@ -194,8 +209,8 @@ void setup() {
     envelope1.attack(0);
     envelope1.hold(0);
     envelope1.decay(100);
-    envelope1.sustain(1.0);
-    envelope1.release(700);
+    envelope1.sustain(.5);
+    envelope1.release(100);
 
     //mixer2.gain(0 , 1.0);
     //mixer2.gain(1 , 0.0);
@@ -211,9 +226,6 @@ void setup() {
 
     initLookupTable();
 
-    allNoteOn();
-    delay(10);
-    allNoteOff();
 }
 
 
