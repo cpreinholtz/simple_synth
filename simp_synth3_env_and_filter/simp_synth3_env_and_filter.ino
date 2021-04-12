@@ -5,89 +5,124 @@
 #include <SerialFlash.h>
 
 // GUItool: begin automatically generated code
-AudioAmplifier           amp4; //xy=60.000003814697266,302.50000381469727
-AudioAmplifier           amp3; //xy=61.25,263.75000381469727
-AudioAmplifier           amp5; //xy=61.25,343.75
-AudioAmplifier           amp2; //xy=62.5,217.5
-AudioAmplifier           amp1;           //xy=65.50000762939453,169.25000190734863
-AudioSynthWaveformSine   sine1;          //xy=75.00000381469727,118.50000190734863
-AudioSynthNoisePink      pink1;          //xy=221.00000381469727,378.7500009536743
-AudioSynthWaveformModulated waveformMod3; //xy=242.25000381469727,302.00000381469727
-AudioSynthWaveformModulated waveformMod1;   //xy=243.00000381469727,202.75000095367432
-AudioSynthWaveformModulated waveformMod2; //xy=246.00000381469727,250.75000095367432
-AudioSynthWaveformDc     dc1;            //xy=330.00000381469727,501.7500009536743
-AudioMixer4              mixer1;         //xy=421.00000381469727,296.7500009536743
-AudioEffectEnvelope      envelope2; //xy=484.00000381469727,440.7500009536743
-AudioEffectEnvelope      envelope1;      //xy=512.0000038146973,200.75000095367432
-AudioMixer4              mixer3; //xy=610,492.5
-AudioFilterStateVariable filter1;        //xy=664.0000038146973,298.7500009536743
-AudioEffectDelay         delay1;         //xy=742.8571739196777,568.5714340209961
-AudioEffectBitcrusher    bitcrusher1;    //xy=905.8928565979004,435.3571548461914
-AudioEffectFreeverbStereo freeverbs1;     //xy=944.6428527832031,380.3571529388428
-AudioMixer4              mixer7; //xy=1030,684.2857055664062
-AudioMixer4              mixer8; //xy=1030,764.2857055664062
-AudioMixer4              mixer6; //xy=1037.1429443359375,609.9999961853027
-AudioMixer4              mixer5; //xy=1042.857105255127,515.7143096923828
-AudioMixer4              mixer2; //xy=1167.9644393920898,249.39287567138672
-AudioMixer4              mixer10; //xy=1180,725.7142944335938
-AudioMixer4              mixer9; //xy=1188.5714111328125,577.1428833007812
-AudioMixer4              mixer4; //xy=1360.178409576416,504.6428871154785
-AudioOutputAnalogStereo  dacs1;          //xy=1367.1428184509277,323.57146167755127
-AudioConnection          patchCord1(amp4, 0, waveformMod2, 1);
-AudioConnection          patchCord2(amp3, 0, waveformMod3, 0);
-AudioConnection          patchCord3(amp5, 0, waveformMod3, 1);
-AudioConnection          patchCord4(amp2, 0, waveformMod2, 0);
-AudioConnection          patchCord5(amp1, 0, waveformMod1, 0);
-AudioConnection          patchCord6(sine1, amp1);
-AudioConnection          patchCord7(sine1, amp2);
-AudioConnection          patchCord8(sine1, amp3);
-AudioConnection          patchCord9(sine1, amp4);
-AudioConnection          patchCord10(sine1, amp5);
-AudioConnection          patchCord11(sine1, 0, mixer3, 1);
-AudioConnection          patchCord12(pink1, 0, mixer1, 3);
-AudioConnection          patchCord13(waveformMod3, 0, mixer1, 2);
-AudioConnection          patchCord14(waveformMod1, 0, mixer1, 0);
-AudioConnection          patchCord15(waveformMod2, 0, mixer1, 1);
-AudioConnection          patchCord16(dc1, envelope2);
-AudioConnection          patchCord17(mixer1, envelope1);
-AudioConnection          patchCord18(envelope2, 0, mixer3, 0);
-AudioConnection          patchCord19(envelope1, 0, filter1, 0);
-AudioConnection          patchCord20(mixer3, 0, filter1, 1);
-AudioConnection          patchCord21(filter1, 0, mixer2, 0);
-AudioConnection          patchCord22(filter1, 0, mixer4, 0);
-AudioConnection          patchCord23(filter1, 0, freeverbs1, 0);
-AudioConnection          patchCord24(filter1, 0, bitcrusher1, 0);
-AudioConnection          patchCord25(filter1, 0, delay1, 0);
-AudioConnection          patchCord26(delay1, 0, mixer5, 0);
-AudioConnection          patchCord27(delay1, 0, mixer7, 0);
-AudioConnection          patchCord28(delay1, 1, mixer5, 1);
-AudioConnection          patchCord29(delay1, 1, mixer7, 1);
-AudioConnection          patchCord30(delay1, 2, mixer5, 2);
-AudioConnection          patchCord31(delay1, 2, mixer7, 2);
-AudioConnection          patchCord32(delay1, 3, mixer5, 3);
-AudioConnection          patchCord33(delay1, 3, mixer7, 3);
-AudioConnection          patchCord34(delay1, 4, mixer6, 0);
-AudioConnection          patchCord35(delay1, 4, mixer8, 0);
-AudioConnection          patchCord36(delay1, 5, mixer6, 1);
-AudioConnection          patchCord37(delay1, 5, mixer8, 1);
-AudioConnection          patchCord38(delay1, 6, mixer6, 2);
-AudioConnection          patchCord39(delay1, 6, mixer8, 2);
-AudioConnection          patchCord40(delay1, 7, mixer6, 3);
-AudioConnection          patchCord41(delay1, 7, mixer8, 3);
-AudioConnection          patchCord42(bitcrusher1, 0, mixer2, 2);
-AudioConnection          patchCord43(bitcrusher1, 0, mixer4, 2);
-AudioConnection          patchCord44(freeverbs1, 0, mixer2, 1);
-AudioConnection          patchCord45(freeverbs1, 1, mixer4, 1);
-AudioConnection          patchCord46(mixer7, 0, mixer10, 0);
-AudioConnection          patchCord47(mixer8, 0, mixer10, 1);
-AudioConnection          patchCord48(mixer6, 0, mixer9, 1);
-AudioConnection          patchCord49(mixer5, 0, mixer9, 0);
-AudioConnection          patchCord50(mixer2, 0, dacs1, 0);
-AudioConnection          patchCord51(mixer10, 0, mixer4, 3);
-AudioConnection          patchCord52(mixer9, 0, mixer2, 3);
-AudioConnection          patchCord53(mixer4, 0, dacs1, 1);
+AudioSynthWaveformSine   sine2; //xy=55,506.75000953674316
+AudioAmplifier           amp9; //xy=95.41668319702148,720.7499980926514
+AudioAmplifier           amp8; //xy=96.66667938232422,681.9999980926514
+AudioAmplifier           amp7; //xy=97.91667938232422,635.7499942779541
+AudioAmplifier           amp6; //xy=100.91668701171875,587.4999961853027
+AudioSynthWaveformSine   sine1;          //xy=166.25000381469727,107.25000190734863
+AudioAmplifier           amp4; //xy=185,336.25000190734863
+AudioAmplifier           amp3; //xy=186.24999618530273,297.50000190734863
+AudioAmplifier           amp5; //xy=186.24999618530273,377.49999809265137
+AudioAmplifier           amp2; //xy=187.49999618530273,251.24999809265137
+AudioAmplifier           amp1;           //xy=190.50000381469727,203
+AudioSynthNoisePink      pink2; //xy=256.4166831970215,796.9999952316284
+AudioSynthWaveformModulated waveformMod6; //xy=277.6666831970215,720.2499980926514
+AudioSynthWaveformModulated waveformMod4; //xy=278.4166831970215,620.9999952316284
+AudioSynthWaveformModulated waveformMod5; //xy=281.4166831970215,668.9999952316284
+AudioSynthNoisePink      pink1;          //xy=346,412.4999990463257
+AudioSynthWaveformModulated waveformMod3; //xy=367.25,335.75000190734863
+AudioSynthWaveformModulated waveformMod1;   //xy=368,236.49999904632568
+AudioSynthWaveformModulated waveformMod2; //xy=371,284.4999990463257
+AudioSynthWaveformDc     dc2; //xy=555.4166984558105,716.2500047683716
+AudioMixer4              mixer11; //xy=593.9166946411133,625
+AudioSynthWaveformDc     dc1;            //xy=645.0000152587891,331.75000858306885
+AudioMixer4              mixer1;         //xy=683.5000114440918,240.50000381469727
+AudioEffectEnvelope      envelope4; //xy=724.4167022705078,697.7500047683716
+AudioEffectEnvelope      envelope2; //xy=814.0000190734863,313.25000858306885
+AudioMixer4              mixer12; //xy=850.4166984558105,749.5000038146973
+AudioEffectEnvelope      envelope3; //xy=884.916690826416,560.2500038146973
+AudioMixer4              mixer3; //xy=940.0000152587891,365.00000762939453
+AudioEffectEnvelope      envelope1;      //xy=974.5000076293945,175.75000762939453
+AudioFilterStateVariable filter2; //xy=1036.916690826416,658.2500038146973
+AudioFilterStateVariable filter1;        //xy=1133.1666717529297,277.0833339691162
+AudioMixer4              mixer13; //xy=1326.6666793823242,465
+AudioEffectDelay         delay1;         //xy=1522.0238914489746,505.2381172180176
+AudioEffectBitcrusher    bitcrusher1;    //xy=1685.0595741271973,372.0238380432129
+AudioEffectFreeverbStereo freeverbs1;     //xy=1723.8095703125,317.02383613586426
+AudioMixer4              mixer7; //xy=1809.1667175292969,620.9523887634277
+AudioMixer4              mixer8; //xy=1809.1667175292969,700.9523887634277
+AudioMixer4              mixer6; //xy=1816.3096618652344,546.6666793823242
+AudioMixer4              mixer5; //xy=1822.0238227844238,452.3809928894043
+AudioMixer4              mixer2; //xy=1947.1311569213867,186.0595588684082
+AudioMixer4              mixer10; //xy=1959.1667175292969,662.3809776306152
+AudioMixer4              mixer9; //xy=1967.7381286621094,513.8095664978027
+AudioMixer4              mixer4; //xy=2139.345127105713,441.3095703125
+AudioOutputAnalogStereo  dacs1;          //xy=2209.6429901123047,246.90481090545654
+AudioConnection          patchCord1(sine2, amp6);
+AudioConnection          patchCord2(sine2, amp7);
+AudioConnection          patchCord3(sine2, amp8);
+AudioConnection          patchCord4(sine2, amp9);
+AudioConnection          patchCord5(sine2, 0, mixer12, 1);
+AudioConnection          patchCord6(amp9, 0, waveformMod5, 1);
+AudioConnection          patchCord7(amp8, 0, waveformMod6, 0);
+AudioConnection          patchCord8(amp7, 0, waveformMod5, 0);
+AudioConnection          patchCord9(amp6, 0, waveformMod4, 0);
+AudioConnection          patchCord10(sine1, amp1);
+AudioConnection          patchCord11(sine1, amp2);
+AudioConnection          patchCord12(sine1, amp3);
+AudioConnection          patchCord13(sine1, amp4);
+AudioConnection          patchCord14(sine1, amp5);
+AudioConnection          patchCord15(sine1, 0, mixer3, 1);
+AudioConnection          patchCord16(amp4, 0, waveformMod2, 1);
+AudioConnection          patchCord17(amp3, 0, waveformMod3, 0);
+AudioConnection          patchCord18(amp5, 0, waveformMod3, 1);
+AudioConnection          patchCord19(amp2, 0, waveformMod2, 0);
+AudioConnection          patchCord20(amp1, 0, waveformMod1, 0);
+AudioConnection          patchCord21(pink2, 0, mixer11, 3);
+AudioConnection          patchCord22(waveformMod6, 0, mixer11, 2);
+AudioConnection          patchCord23(waveformMod4, 0, mixer11, 0);
+AudioConnection          patchCord24(waveformMod5, 0, mixer11, 1);
+AudioConnection          patchCord25(pink1, 0, mixer1, 3);
+AudioConnection          patchCord26(waveformMod3, 0, mixer1, 2);
+AudioConnection          patchCord27(waveformMod1, 0, mixer1, 0);
+AudioConnection          patchCord28(waveformMod2, 0, mixer1, 1);
+AudioConnection          patchCord29(dc2, envelope4);
+AudioConnection          patchCord30(mixer11, envelope3);
+AudioConnection          patchCord31(dc1, envelope2);
+AudioConnection          patchCord32(mixer1, envelope1);
+AudioConnection          patchCord33(envelope4, 0, mixer12, 0);
+AudioConnection          patchCord34(envelope2, 0, mixer3, 0);
+AudioConnection          patchCord35(mixer12, 0, filter2, 1);
+AudioConnection          patchCord36(envelope3, 0, filter2, 0);
+AudioConnection          patchCord37(mixer3, 0, filter1, 1);
+AudioConnection          patchCord38(envelope1, 0, filter1, 0);
+AudioConnection          patchCord39(filter2, 0, mixer13, 1);
+AudioConnection          patchCord40(filter1, 0, mixer13, 0);
+AudioConnection          patchCord41(mixer13, 0, mixer2, 0);
+AudioConnection          patchCord42(mixer13, freeverbs1);
+AudioConnection          patchCord43(mixer13, 0, mixer4, 0);
+AudioConnection          patchCord44(mixer13, bitcrusher1);
+AudioConnection          patchCord45(mixer13, delay1);
+AudioConnection          patchCord46(delay1, 0, mixer5, 0);
+AudioConnection          patchCord47(delay1, 0, mixer7, 0);
+AudioConnection          patchCord48(delay1, 1, mixer5, 1);
+AudioConnection          patchCord49(delay1, 1, mixer7, 1);
+AudioConnection          patchCord50(delay1, 2, mixer5, 2);
+AudioConnection          patchCord51(delay1, 2, mixer7, 2);
+AudioConnection          patchCord52(delay1, 3, mixer5, 3);
+AudioConnection          patchCord53(delay1, 3, mixer7, 3);
+AudioConnection          patchCord54(delay1, 4, mixer6, 0);
+AudioConnection          patchCord55(delay1, 4, mixer8, 0);
+AudioConnection          patchCord56(delay1, 5, mixer6, 1);
+AudioConnection          patchCord57(delay1, 5, mixer8, 1);
+AudioConnection          patchCord58(delay1, 6, mixer6, 2);
+AudioConnection          patchCord59(delay1, 6, mixer8, 2);
+AudioConnection          patchCord60(delay1, 7, mixer6, 3);
+AudioConnection          patchCord61(delay1, 7, mixer8, 3);
+AudioConnection          patchCord62(bitcrusher1, 0, mixer2, 2);
+AudioConnection          patchCord63(bitcrusher1, 0, mixer4, 2);
+AudioConnection          patchCord64(freeverbs1, 0, mixer2, 1);
+AudioConnection          patchCord65(freeverbs1, 1, mixer4, 1);
+AudioConnection          patchCord66(mixer7, 0, mixer10, 0);
+AudioConnection          patchCord67(mixer8, 0, mixer10, 1);
+AudioConnection          patchCord68(mixer6, 0, mixer9, 1);
+AudioConnection          patchCord69(mixer5, 0, mixer9, 0);
+AudioConnection          patchCord70(mixer2, 0, dacs1, 0);
+AudioConnection          patchCord71(mixer10, 0, mixer4, 3);
+AudioConnection          patchCord72(mixer9, 0, mixer2, 3);
+AudioConnection          patchCord73(mixer4, 0, dacs1, 1);
 // GUItool: end automatically generated code
-
 
 
 
@@ -110,13 +145,11 @@ float midiLookUp[127];
 //CONTROL CHANNELS
 const byte CTRL_MASTER_FREQ = 99;
 
+const byte CTRL_OSC1_MIX = 16;
 const byte CTRL_SAW_MIX = 100;
 const byte CTRL_SQ_MIX = 101;
 const byte CTRL_SIN_MIX = 102;
 const byte CTRL_NOISE_MIX = 103;
-
-
-
 
 
 const byte CTRL_VCA_A = 109;
@@ -124,9 +157,7 @@ const byte CTRL_VCA_D = 110;
 const byte CTRL_VCA_S = 111;
 const byte CTRL_VCA_R = 112;
 
-
 const byte CTRL_FILT_CUTOFF = 104;
-const byte CTRL_FILT_MIX = 105;
 
 const byte CTRL_VCF_A = 113;
 const byte CTRL_VCF_D = 114;
@@ -143,6 +174,37 @@ const byte CTRL_LFO_FMOD3 = 122;
 const byte CTRL_LFO_SMOD2 = 123;
 const byte CTRL_LFO_SMOD3 = 124;
 const byte CTRL_LFO_VCFMOD = 125;
+
+const byte CTRL_OSC2_MIX = 17;
+const byte CTRL_2SIN_DISTORT = 18;
+const byte CTRL_DETUNE_FREQ = 19;
+const byte CTRL_2SAW_MIX = 20;
+const byte CTRL_2SQ_MIX = 21;
+const byte CTRL_2SIN_MIX = 22;
+const byte CTRL_2NOISE_MIX = 23;
+
+const byte CTRL_2VCA_A = 24;
+const byte CTRL_2VCA_D = 25;
+const byte CTRL_2VCA_S = 26;
+const byte CTRL_2VCA_R = 27;
+
+const byte CTRL_2FILT_CUTOFF = 28;
+
+const byte CTRL_2VCF_A = 30;
+const byte CTRL_2VCF_D = 31;
+const byte CTRL_2VCF_S = 32;
+const byte CTRL_2VCF_R = 33;
+const byte CTRL_2VCF_AMNT = 34;
+
+
+const byte CTRL_2LFO_F = 35;
+const byte CTRL_2LFO_A = 36;
+const byte CTRL_2LFO_FMOD1 = 37;
+const byte CTRL_2LFO_FMOD2 = 38;
+const byte CTRL_2LFO_FMOD3 = 39;
+const byte CTRL_2LFO_SMOD2 = 40;
+const byte CTRL_2LFO_VCFMOD = 41;
+
 
 
 
@@ -161,8 +223,8 @@ const byte CTRL_FX_REVERB_SIZE = 91;
 const byte CTRL_FX_REVERB_DAMP = 90;
 
 
-const byte CTRL_FX_DLYMIX_L = 38;
-const byte CTRL_FX_DLYMIX_R = 39;
+const byte CTRL_FX_DLYMIX_L = 58;
+const byte CTRL_FX_DLYMIX_R = 59;
 
 const byte CTRL_FX_DLY1_S = 60;
 const byte CTRL_FX_DLY1_L = 61;
@@ -210,7 +272,11 @@ byte lastNote=0;
 byte lastValidVcfCutoff=0;
 byte lastValidVcfAmmount=0;
 
+byte lastValidVcf2Cutoff=0;
+byte lastValidVcf2Ammount=0;
+float lastMasterFrequency=200;
 
+byte kDetune = 0;
 
 ///////////////////////////////////////////////
 //Helper functions
@@ -219,7 +285,19 @@ void setAllOscFreq(float f){
     waveformMod1.frequency(f);
     waveformMod2.frequency(f);
     waveformMod3.frequency(f);
+    lastMasterFrequency = f;
 }
+
+void setAllOsc2Freq(float f){ 
+    waveformMod4.frequency(f);
+    waveformMod5.frequency(f);
+    waveformMod6.frequency(f);
+}
+
+float getFreqFromDetune(){
+    return map(kDetune, 0, 127, lastMasterFrequency/2, lastMasterFrequency);
+}
+
 
 
 //AMMOUNT + CUTOFF cannot exceed MAX or filter gets noizy
@@ -239,6 +317,22 @@ void filterSetAmmountFromVal(byte val){
     lastValidVcfAmmount = val;
 }
 
+//AMMOUNT + CUTOFF cannot exceed MAX or filter gets noizy
+void filter2SetFreqFromVal(byte val){
+    if ((int)val + (int) lastValidVcf2Ammount > VCF_MAX) {
+        val = VCF_MAX - lastValidVcf2Ammount;
+    }
+    filter2.frequency(VCF_SCALE * (float)val / 127.0);
+    lastValidVcf2Cutoff = val;
+}
+
+void filter2SetAmmountFromVal(byte val){
+    if ((int)val + (int) lastValidVcf2Cutoff > VCF_MAX) {
+        val = VCF_MAX - lastValidVcf2Cutoff;
+    }
+    dc2.amplitude((float)val / 127.0);
+    lastValidVcf2Ammount = val;
+}
 
 
 ///////////////////////////////////////////////
@@ -251,8 +345,12 @@ void filterSetAmmountFromVal(byte val){
 void handleNoteOn(byte channel, byte note, byte velocity){
     Serial.println("note on");
     setAllOscFreq(midiLookUp[note]);
+    setAllOsc2Freq(getFreqFromDetune());
     envelope1.noteOn();
     envelope2.noteOn();
+    envelope3.noteOn();
+    envelope4.noteOn();
+    
     lastNote = note;
 }
 
@@ -262,6 +360,9 @@ void handleNoteOff(byte channel, byte note, byte velocity){
     if (note == lastNote){
         envelope1.noteOff();
         envelope2.noteOff();
+
+        envelope3.noteOff();
+        envelope4.noteOff();
     }
 }
 
@@ -292,6 +393,39 @@ void ctrlChange(byte ch, byte ctrl, byte val){
         case CTRL_NOISE_MIX:
             mixer1.gain(3,((float)val)/127.0 );
             break;
+            
+        case CTRL_OSC1_MIX:
+            mixer13.gain(0,((float)val)/127.0 );
+            break;
+
+            
+///////////////////////////////////////////////
+//OSCILLATOR MIX 2
+///////////////////////////////////////////////
+        case CTRL_2SAW_MIX:
+            mixer11.gain(0,((float)val)/127.0 );
+            break;      
+        case CTRL_2SQ_MIX:
+            mixer11.gain(1,((float)val)/127.0 );
+            break;      
+        case CTRL_2SIN_MIX:
+            mixer11.gain(2,(2.0*(float)val)/127.0 );
+            break;      
+        case CTRL_2NOISE_MIX:
+            mixer11.gain(3,((float)val)/127.0 );
+            break;
+            
+        case CTRL_OSC2_MIX:
+            mixer13.gain(1,((float)val)/127.0 );
+            break;
+
+        case CTRL_DETUNE_FREQ:          
+            kDetune = val;  
+            setAllOsc2Freq(getFreqFromDetune());
+            break;          
+
+            
+            
 ///////////////////////////////////////////////
 //VCA
 ///////////////////////////////////////////////
@@ -306,6 +440,22 @@ void ctrlChange(byte ch, byte ctrl, byte val){
             break;      
         case CTRL_VCA_R:
             envelope1.release( 2000 * ((float)val)/127.0 );
+            break;
+
+///////////////////////////////////////////////
+//VCA 2
+///////////////////////////////////////////////
+        case CTRL_2VCA_A:
+            envelope3.attack( 2000 * ((float)val)/127.0 );
+            break;      
+        case CTRL_2VCA_D:
+            envelope3.decay(  2000 * ((float)val)/127.0 );
+            break;      
+        case CTRL_2VCA_S:
+            envelope3.sustain(((float)val)/127.0 );
+            break;      
+        case CTRL_2VCA_R:
+            envelope3.release( 2000 * ((float)val)/127.0 );
             break;
 
 ///////////////////////////////////////////////
@@ -327,6 +477,29 @@ void ctrlChange(byte ch, byte ctrl, byte val){
             envelope2.sustain(((float)val)/127.0 );
             break;      
         case CTRL_VCF_R:
+            envelope2.release( 2000 * ((float)val)/127.0 );
+            break;
+
+
+///////////////////////////////////////////////
+//FILTER 2
+///////////////////////////////////////////////
+        case CTRL_2FILT_CUTOFF:
+            filter2SetFreqFromVal(val);
+            break;
+        case CTRL_2VCF_AMNT:
+            filter2SetAmmountFromVal(val);
+            break;     
+        case CTRL_2VCF_A:
+            envelope2.attack( 2000 * ((float)val)/127.0 );
+            break;      
+        case CTRL_2VCF_D:
+            envelope2.decay(  2000 * ((float)val)/127.0 );
+            break;      
+        case CTRL_2VCF_S:
+            envelope2.sustain(((float)val)/127.0 );
+            break;      
+        case CTRL_2VCF_R:
             envelope2.release( 2000 * ((float)val)/127.0 );
             break;
 
@@ -502,7 +675,33 @@ void ctrlChange(byte ch, byte ctrl, byte val){
             mixer3.gain(1,((float)val)/127.0 );
             break; 
             
-
+///////////////////////////////////////////////
+//LFO 2
+///////////////////////////////////////////////
+        case CTRL_2LFO_A:
+            sine2.amplitude(((float)val)/127.0);
+            break;
+        case CTRL_2LFO_F:
+            sine2.frequency(60 * ((float)val)/127.0);
+            break;     
+                        
+        case CTRL_2LFO_FMOD1:
+            amp6.gain(((float)val)/127.0 );
+            break;  
+        case CTRL_2LFO_FMOD2:
+            amp7.gain(((float)val)/127.0 );
+            break;    
+        case CTRL_2LFO_FMOD3:
+            amp8.gain(((float)val)/127.0 );
+            break;    
+            
+        case CTRL_2LFO_SMOD2:
+            amp9.gain(((float)val)/127.0 );
+            break;    
+                  
+        case CTRL_2LFO_VCFMOD:
+            mixer12.gain(1,((float)val)/127.0 );
+            break; 
 ///////////////////////////////////////////////
 //DEFAULT
 ///////////////////////////////////////////////
@@ -546,29 +745,53 @@ void setup() {
     usbMIDI.setHandleControlChange(ctrlChange);
     usbMIDI.setHandleNoteOn(handleNoteOn);
     usbMIDI.setHandleNoteOff(handleNoteOff);
-    AudioMemory(200);
+    AudioMemory(400);
 
-
-//OSC
+    mixer13.gain(0, 1.0);
+    mixer13.gain(1, 1.0);
+    mixer13.gain(2, 0.0);
+    mixer13.gain(3, 0.0);
+    
+//OSC 1
     int default_freq = 200;
     float default_amp = .25;
     float default_pw = .15;
     waveformMod1.begin(default_amp,default_freq, WAVEFORM_SAWTOOTH);    
     waveformMod2.begin(default_amp, default_freq, WAVEFORM_PULSE);    
-    waveformMod3.begin(default_amp, default_freq ,WAVEFORM_TRIANGLE_VARIABLE);    
+    waveformMod3.begin(default_amp, default_freq ,WAVEFORM_TRIANGLE_VARIABLE);  
+    lastMasterFrequency = (float)default_freq;  
     pink1.amplitude(default_amp);
     mixer1.gain(0 , 1.0);
     mixer1.gain(1 , 1.0);
     mixer1.gain(2 , 1.0);
     mixer1.gain(3 , 1.0);
+
+//OSC2
+    waveformMod4.begin(default_amp,default_freq, WAVEFORM_SAWTOOTH);    
+    waveformMod5.begin(default_amp, default_freq, WAVEFORM_PULSE);    
+    waveformMod6.begin(1.0, default_freq ,WAVEFORM_SINE); 
+       
+    pink2.amplitude(default_amp);
+    mixer11.gain(0 , 1.0);
+    mixer11.gain(1 , 1.0);
+    mixer11.gain(2 , 1.0);
+    mixer11.gain(3 , 1.0);
     
-//VCA
+//VCA 1
     envelope1.delay(0);
     envelope1.attack(0);
     envelope1.hold(0);
     envelope1.decay(100);
     envelope1.sustain(.5);
     envelope1.release(100);
+
+//VCA 2
+    envelope3.delay(0);
+    envelope3.attack(0);
+    envelope3.hold(0);
+    envelope3.decay(100);
+    envelope3.sustain(.5);
+    envelope3.release(100);
 
 //VCF
     envelope2.delay(0);
@@ -583,7 +806,53 @@ void setup() {
     filterSetFreqFromVal(50);
     filterSetAmmountFromVal(0);
 
-//Panning mixers
+//VCF 2
+    envelope4.delay(0);
+    envelope4.attack(0);
+    envelope4.hold(0);
+    envelope4.decay(0);
+    envelope4.sustain(1.0);
+    envelope4.release(100);
+
+
+    filter2.octaveControl(3);
+    filter2SetFreqFromVal(50);
+    filter2SetAmmountFromVal(0);
+
+
+    
+    //LFO
+    sine1.frequency(1.0);
+    sine1.amplitude(0.0);
+    amp1.gain(0.0);
+    amp2.gain(0.0);
+    amp3.gain(0.0);
+    amp4.gain(0.0);
+    amp5.gain(0.0);
+    
+    mixer3.gain(0 , 1.0);
+    mixer3.gain(1 , 0.0);
+    mixer3.gain(2 , 0.0);
+    mixer3.gain(3 , 0.0);
+    
+ //LFO 2
+    sine2.frequency(1.0);
+    sine2.amplitude(0.0);
+    amp6.gain(0.0);
+    amp7.gain(0.0);
+    amp8.gain(0.0);
+    amp9.gain(0.0);
+    
+    mixer12.gain(0 , 1.0);
+    mixer12.gain(1 , 0.0);
+    mixer12.gain(2 , 0.0);
+    mixer12.gain(3 , 0.0);
+
+
+    
+    
+
+//Panning mixers L , R
     mixer2.gain(0 , 1.0);
     mixer2.gain(1 , 0.0);
     mixer2.gain(2 , 0.0);
@@ -595,7 +864,7 @@ void setup() {
     mixer4.gain(3 , 0.0);
 
     
-//Delay mixers
+//Delay mixers L L R R
     mixer5.gain(0 , 0.0);
     mixer5.gain(1 , 0.0);
     mixer5.gain(2 , 0.0);
@@ -625,21 +894,8 @@ void setup() {
     mixer10.gain(1 , 1.0);
     mixer10.gain(2 , 0.0);
     mixer10.gain(3 , 0.0);
-    
-    //LFO
-    sine1.frequency(1.0);
-    sine1.amplitude(0.0);
-    amp1.gain(0.0);
-    amp2.gain(0.0);
-    amp3.gain(0.0);
-    amp4.gain(0.0);
-    amp5.gain(0.0);
-    
-    mixer3.gain(0 , 1.0);
-    mixer3.gain(1 , 0.0);
-    mixer3.gain(2 , 0.0);
-    mixer3.gain(3 , 0.0);
 
+    
     initLookupTable();
 
 }
