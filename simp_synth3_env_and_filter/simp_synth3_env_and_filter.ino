@@ -16,7 +16,7 @@ AudioAmplifier           amp3; //xy=186.24999618530273,297.50000190734863
 AudioAmplifier           amp5; //xy=186.24999618530273,377.49999809265137
 AudioAmplifier           amp2; //xy=187.49999618530273,251.24999809265137
 AudioAmplifier           amp1;           //xy=190.50000381469727,203
-AudioSynthNoisePink      pink2; //xy=256.4166831970215,796.9999952316284
+AudioSynthKarplusStrong  string1;        //xy=258.4126968383789,797.4603118896484
 AudioSynthWaveformModulated waveformMod6; //xy=277.6666831970215,720.2499980926514
 AudioSynthWaveformModulated waveformMod4; //xy=278.4166831970215,620.9999952316284
 AudioSynthWaveformModulated waveformMod5; //xy=281.4166831970215,668.9999952316284
@@ -44,11 +44,15 @@ AudioEffectBitcrusher    bitcrusher1;    //xy=1656.4880676269531,409.16671180725
 AudioAmplifier           amp11; //xy=1730.7938270568848,292.6984062194824
 AudioEffectDelay         delay1;         //xy=1763.4525985717773,696.6666793823242
 AudioAmplifier           amp12; //xy=1775.0793266296387,331.26985359191895
-AudioAmplifier           amp10; //xy=1798.412826538086,411.26988220214844
+AudioAmplifier           amp10; //xy=1822.6986083984375,412.69847869873047
 AudioMixer4              mixer2; //xy=1947.1311569213867,186.0595588684082
 AudioAmplifier           amp14; //xy=1968.889030456543,649.8413467407227
-AudioOutputAnalogStereo  dacs1;          //xy=2209.6429901123047,246.90481090545654
-AudioMixer4              mixer4; //xy=2217.916759490967,429.8810043334961
+AudioMixer4              mixer4; //xy=2217.9169998168945,411.3095817565918
+AudioSynthSimpleDrum     drum1;          //xy=2329.269847869873,234.76195335388184
+AudioAmplifier           ampDrum1;           //xy=2504.3334884643555,249.66667938232422
+AudioMixer4              mixerFinalL; //xy=3231.333251953125,59.66666793823242
+AudioMixer4              mixerFinalR; //xy=3242.333251953125,379.6666564941406
+AudioOutputAnalogStereo  dacs1;          //xy=3323.9289016723633,199.76204299926758
 AudioConnection          patchCord1(sine2, amp6);
 AudioConnection          patchCord2(sine2, amp7);
 AudioConnection          patchCord3(sine2, amp8);
@@ -69,7 +73,7 @@ AudioConnection          patchCord17(amp3, 0, waveformMod3, 0);
 AudioConnection          patchCord18(amp5, 0, waveformMod3, 1);
 AudioConnection          patchCord19(amp2, 0, waveformMod2, 0);
 AudioConnection          patchCord20(amp1, 0, waveformMod1, 0);
-AudioConnection          patchCord21(pink2, 0, mixer11, 3);
+AudioConnection          patchCord21(string1, 0, mixer11, 3);
 AudioConnection          patchCord22(waveformMod6, 0, mixer11, 2);
 AudioConnection          patchCord23(waveformMod4, 0, mixer11, 0);
 AudioConnection          patchCord24(waveformMod5, 0, mixer11, 1);
@@ -107,14 +111,21 @@ AudioConnection          patchCord55(delay1, 0, amp14, 0);
 AudioConnection          patchCord56(amp12, 0, mixer4, 1);
 AudioConnection          patchCord57(amp10, 0, mixer2, 2);
 AudioConnection          patchCord58(amp10, 0, mixer4, 2);
-AudioConnection          patchCord59(mixer2, 0, dacs1, 0);
+AudioConnection          patchCord59(mixer2, 0, mixerFinalL, 1);
 AudioConnection          patchCord60(amp14, 0, mixer2, 3);
 AudioConnection          patchCord61(amp14, 0, mixer4, 3);
-AudioConnection          patchCord62(mixer4, 0, dacs1, 1);
+AudioConnection          patchCord62(mixer4, 0, mixerFinalR, 1);
+AudioConnection          patchCord63(drum1, ampDrum1);
+AudioConnection          patchCord64(ampDrum1, 0, mixerFinalL, 0);
+AudioConnection          patchCord65(ampDrum1, 0, mixerFinalR, 0);
+AudioConnection          patchCord66(mixerFinalL, 0, dacs1, 0);
+AudioConnection          patchCord67(mixerFinalR, 0, dacs1, 1);
 // GUItool: end automatically generated code
 
 
+
 #include "cc_in.h"
+#include "clk.h"
 
 ///////////////////////////////////////////////
 //CONSTANTS
@@ -280,6 +291,7 @@ void setAllOsc2Freq(float f){
     waveformMod4.frequency(f);
     waveformMod5.frequency(f);
     waveformMod6.frequency(f);
+    //string1.frequency(f);
 }
 
 float getFreqFromDetune(){
@@ -333,12 +345,13 @@ void filter2SetAmmountFromVal(byte val){
 void handleNoteOn(byte channel, byte note, byte velocity){
     Serial.println("note on");
     setAllOscFreq(midiLookUp[note]);
-    setAllOsc2Freq(getFreqFromDetune());
+    float f2 = getFreqFromDetune();
+    setAllOsc2Freq(f2);
     envelope1.noteOn();
     envelope2.noteOn();
     envelope3.noteOn();
     envelope4.noteOn();
-    
+    string1.noteOn(f2, m127(velocity) );
     lastNote = note;
 }
 
@@ -412,7 +425,7 @@ void setup() {
     waveformMod4.begin(default_amp,default_freq, WAVEFORM_SAWTOOTH);    
     waveformMod5.begin(default_amp, default_freq, WAVEFORM_PULSE);    
     waveformMod6.begin(default_amp, default_freq ,WAVEFORM_SINE);   
-    pink2.amplitude(default_amp);
+    //string1.amplitude(default_amp);
     
 
 
@@ -427,4 +440,5 @@ void setup() {
 
 void loop() {
     usbMIDI.read();
+    checkTime();
 }

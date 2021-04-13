@@ -2,10 +2,7 @@
 //Definitions
 ////////////////////////////////////////////////////////////////
 
-
-
-
-
+#include "common.h"
 
 
 
@@ -101,7 +98,7 @@ byte getNext(byte lastVal){
 void ctrlOsc1Mix(){
     static byte lastVal =127;
     lastVal = getNext(lastVal);
-    mixer3.gain(0, m127( lastVal) );
+    mixer13.gain(0, m127( lastVal) );
 }
 
 
@@ -252,7 +249,7 @@ void ctrlOsc1LfoVcfmod(){
 void ctrlOsc2Mix(){
     static byte lastVal =127;
     lastVal = getNext(lastVal);
-    mixer3.gain(1, m127( lastVal) );
+    mixer13.gain(1, m127( lastVal) );
 }
 
 
@@ -350,7 +347,7 @@ void ctrlOsc2FilterVcfRelease(){
 }
 
 ////////////////////////////////////////////////////////////////
-//LFO1
+//LFO2
 ////////////////////////////////////////////////////////////////
 
 
@@ -393,7 +390,7 @@ void ctrlOsc2LfoSmod2(){
 void ctrlOsc2LfoVcfmod(){
     static byte lastVal =0;
     lastVal = getNext(lastVal);
-    mixer12.gain(1,m127(lastVal) );
+    mixer3.gain(1,m127(lastVal) );
 }       
 
 
@@ -506,6 +503,51 @@ void ctrlFxDelaySpeed(){
     delay1.delay(0, 1000.0* (1.01 - m127(lastVal) ) );
 }  
 
+
+
+///////////////////////////////////////////////
+//Drum
+///////////////////////////////////////////////
+void ctrlDrum1Amplitude(){
+    static byte lastVal =0;
+    lastVal = getNext(lastVal);
+    ampDrum1.gain( m127(lastVal) );
+}  
+
+
+
+
+void ctrlDrum1Frequency(){
+    static byte lastVal =20;
+    lastVal = getNext(lastVal);
+    drum1.frequency( midiLookUp[lastVal]);
+    
+}
+
+
+
+
+void ctrlDrum1Length(){
+    static byte lastVal =10;
+    lastVal = getNext(lastVal);
+    drum1.length(1000*m127(lastVal) );
+    
+}
+
+void ctrlDrum1Pan(){
+    static byte lastVal =63;
+    lastVal = getNext(lastVal);
+    //mixerDrum1L.gain(1, 1.0- m127(lastVal) );
+    mixerFinalL.gain(0, 1.0- m127(lastVal) );
+    //mixerDrum1R.gain(1, 1.0- m127(lastVal) );
+    mixerFinalR.gain(0,  m127(lastVal) );
+
+}
+
+
+
+
+
 ////////////////////////////////////////////////////////////////
 //Pages
 ////////////////////////////////////////////////////////////////
@@ -543,6 +585,12 @@ tCcHandlerList handleMePlease [] = {
         ctrlFxReverbAmmount,        ctrlFxReverbPan,            ctrlFxReverbDamping,            ctrlFxReverbSize,
         ctrlFxBcAmount,             ctrlFxBcPan,                ctrlFxBcRate,                   ctrlFxBcBits,
         ctrlFxDelayAmount,          ctrlFxDelayPan,             ctrlFxDelayFeedback,            ctrlFxDelaySpeed
+    },
+    {
+        ctrlDrum1Amplitude,         ctrlDrum1Frequency,         ctrlDrum1Length,                ctrlDrum1Pan ,
+        noop,                       noop,                       noop,                           noop,
+        noop,                       noop,                       noop,                           noop,
+        noop,                       noop,                       noop,                           noop,
     }
 
 };
@@ -593,5 +641,26 @@ void setDefaults(){
         }
     }
 
-    ctrlOsc2Mix();
+    
+
+    //this stuff never changes, is not part of any page
+
+
+    mixerFinalL.gain(1, 1.0 );
+    mixerFinalR.gain(1, 1.0 );
+
+    mixerFinalL.gain(2, 0.0 );
+    mixerFinalR.gain(2, 0.0 );
+    
+    mixerFinalL.gain(3, 0.0 );
+    mixerFinalR.gain(3, 0.0 );
+
+
+    //filter env (controlled by DC)
+    mixer12.gain(0, 1.0);
+    //filter env (controlled by DC)
+    mixer3.gain(0, 1.0);
+
+    //bank osc mix  //ctrlOsc2Mix(); ctrlOsc1Mix();
+    mixer13.gain(0, 1.0);    mixer13.gain(1, 1.0);     mixer13.gain(2, 0.0);     mixer13.gain(3, 0.0);
 }
