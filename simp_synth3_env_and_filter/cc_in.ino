@@ -15,15 +15,20 @@
 byte kCh;
 byte kVal=0x40;
 byte kCtrl;
-int kPage =0;
+int kPage =1;
 
 //how many knobs are on yer controller
 const int CTRL_PER_PAGE = 16;
+const int NUM_PADS = 8;
+
 
 //CC ctrl per knob in order from left to right then top to bottom
 int ctrlIndexed [CTRL_PER_PAGE] ={0x7, 0x4A, 0x47, 0x4C, 0x4d, 0x5D, 0x49, 0x4B, 
                         0x72, 0x12, 0x13, 0x10, 0x11, 0x5B, 0x4F, 0x48 };
 
+                        
+//CC ctrl per knob in order from left to right then top to bottom
+int pageIndexed [NUM_PADS] ={0x16, 0x17, 0x18, 0x19, 0x1A, 0x1B, 0x1C, 0x1D };
 ////////////////////////////////////////////////////////////////
 //Helpers
 ////////////////////////////////////////////////////////////////
@@ -43,7 +48,13 @@ int getHelper(){
     return i;
 }
 
-
+int getPage(){
+    int i;
+    for ( i= 0; i < NUM_PADS; i++){
+        if (pageIndexed[i] == kCtrl){break;}
+    }
+    return i;
+}
 
 
 
@@ -180,13 +191,60 @@ void ctrlOsc1FilterVcfRelease(){
     envelope2.release( 2000 * m127((lastVal)) );   
 }
 
+
+////////////////////////////////////////////////////////////////
+//LFO1
+////////////////////////////////////////////////////////////////
+
+
+
 void ctrlOsc1LfoAmmount(){
-    static byte lastVal =10;
+    static byte lastVal =0;
     lastVal = getNext(lastVal);
     sine1.amplitude(m127(lastVal));
 }
 
+void ctrlOsc1LfoFrequency(){
+    static byte lastVal =10;
+    lastVal = getNext(lastVal);
+    sine1.frequency(60 * m127(lastVal));
+}
 
+void ctrlOsc1LfoFmod1(){
+    static byte lastVal =0;
+    lastVal = getNext(lastVal);
+    amp1.gain(m127(lastVal));
+}
+
+void ctrlOsc1LfoFmod2(){
+    static byte lastVal =0;
+    lastVal = getNext(lastVal);
+    amp2.gain(m127(lastVal));
+}
+void ctrlOsc1LfoFmod3(){
+    static byte lastVal =0;
+    lastVal = getNext(lastVal);
+    amp3.gain(m127(lastVal));
+}
+
+void ctrlOsc1LfoSmod2(){
+    static byte lastVal =0;
+    lastVal = getNext(lastVal);
+    amp4.gain(m127(lastVal));
+}
+void ctrlOsc1LfoSmod3(){
+    static byte lastVal =0;
+    lastVal = getNext(lastVal);
+    amp5.gain(m127(lastVal));
+}                    
+void ctrlOsc1LfoVcfmod(){
+    static byte lastVal =0;
+    lastVal = getNext(lastVal);
+    mixer3.gain(1,m127(lastVal) );
+}       
+
+
+            
 
 
 
@@ -195,53 +253,61 @@ void ctrlOsc1LfoAmmount(){
 ////////////////////////////////////////////////////////////////
 
 //tCcHandlerList is a list of pointers to functions with no args and that return void
-typedef void (*tCcHandlerList[]) ();
-typedef void (*tCcPageList[][16]) ();
+typedef void (*tCcHandlerList[CTRL_PER_PAGE]) ();
 
 
 #define ARRAY_SIZE(A) (sizeof(A) / sizeof((A)[0]))
 
 
 //Handlers per knob in order from left to right then top to bottom
-tCcHandlerList handleMePlease= {
-
+tCcHandlerList handleMePlease [] = {
+    {
         ctrlOsc1Sub0Mix,            ctrlOsc1Sub1Mix,            ctrlOsc1Sub2Mix,                ctrlOsc1Sub3Mix, 
         ctrlOsc1VcaAttack,          ctrlOsc1VcaDecay,           ctrlOsc1VcaSustain,             ctrlOsc1VcaRelease,
         ctrlOsc1Mix,                ctrlOsc1FilterCutoff,       ctrlOsc1FilterResonance,        ctrlOsc1FilterVcfAmmount,
         ctrlOsc1FilterVcfAttack,    ctrlOsc1FilterVcfDecay,     ctrlOsc1FilterVcfSustain,       ctrlOsc1FilterVcfRelease
+    },
+    {
+        ctrlOsc1LfoAmmount, ctrlOsc1LfoFrequency,  ctrlOsc1LfoSmod2, ctrlOsc1LfoSmod3,
+        ctrlOsc1LfoFmod1, ctrlOsc1LfoFmod2, ctrlOsc1LfoFmod3,  ctrlOsc1LfoVcfmod,
+        noop, noop, noop, noop,
+        noop, noop, noop, noop
+    }
 
 };
+
+//ctrlOsc1LfoAmmount, ctrlOsc1LfoFrequency,  ctrlOsc1LfoSmod2, ctrlOsc1LfoSmod3,
+//ctrlOsc1LfoFmod1, ctrlOsc1LfoFmod2, ctrlOsc1LfoFmod3,  ctrlOsc1LfoVcfmod
 
 
 void ccHandler(byte ch, byte ctrl, byte val){
 
-    if (val == 0x40) {return;}
+    if (val == 0x40) {return;}    
+    Serial.println(" cc");
     
-    Serial.println(" cc");  
-    Serial.println(ch); 
-    Serial.println(ctrl);  
-    Serial.println(val);     
     kCh = ch;    
     kCtrl = ctrl;
     kVal = val;
 
 
     int ctrlKnob = getHelper();
-    Serial.println(ctrlKnob); 
-    
-
     if( ctrlKnob >=0 and ctrlKnob < CTRL_PER_PAGE ){
         Serial.println("ctrlKnob");
+        Serial.println(ctrlKnob);
         //use the current page, and the ctrl Knob CC to call the correct handler
-        handleMePlease[ctrlKnob]();       
+        handleMePlease[kPage][ctrlKnob]();           
     } else {
-        Serial.println("unrecognisted cc");        
-        Serial.println(kCtrl);
-    }
-
-    Serial.println("ctrlKnob");
-
-    
+        int page = getPage();
+        if( page >=0 and page < NUM_PADS and page < ARRAY_SIZE(handleMePlease) ){
+            Serial.println("page");
+            Serial.println(page);
+            //switch the current page
+            kPage = page;            
+        } else {
+            Serial.println("unrecognised cc");        
+            Serial.println(kCtrl);
+        }
+    }    
 }
 
 
@@ -249,9 +315,10 @@ void ccHandler(byte ch, byte ctrl, byte val){
 
 void setDefaults(){
     kVal = 0x40;
-
-    for (int ctrlKnob = 0; ctrlKnob < CTRL_PER_PAGE; ctrlKnob++){
-        handleMePlease[ctrlKnob]();
+    for (byte page = 0; page < ARRAY_SIZE(handleMePlease); page ++){
+        for (int ctrlKnob = 0; ctrlKnob < CTRL_PER_PAGE; ctrlKnob++){
+            handleMePlease[page][ctrlKnob]();
+        }
     }
 }
 
@@ -483,37 +550,6 @@ void ctrlOsc2Detune(byte ch, byte ctrl, byte kVal){
 
 
 
-///////////////////////////////////////////////
-//LFO
-///////////////////////////////////////////////
-        case CTRL_LFO_A:
-            sine1.amplitude(((float)kVal)/127.0);
-            break;
-        case CTRL_LFO_F:
-            sine1.frequency(60 * ((float)kVal)/127.0);
-            break;     
-                        
-        case CTRL_LFO_FMOD1:
-            amp1.gain(((float)kVal)/127.0 );
-            break;  
-        case CTRL_LFO_FMOD2:
-            amp2.gain(((float)kVal)/127.0 );
-            break;    
-        case CTRL_LFO_FMOD3:
-            amp3.gain(((float)kVal)/127.0 );
-            break;    
-            
-        case CTRL_LFO_SMOD2:
-            amp4.gain(((float)kVal)/127.0 );
-            break;    
-        case CTRL_LFO_SMOD3:
-            amp5.gain(((float)kVal)/127.0 );
-            break; 
-                  
-        case CTRL_LFO_VCFMOD:
-            mixer3.gain(1,((float)kVal)/127.0 );
-            break; 
-            
 ///////////////////////////////////////////////
 //LFO 2
 ///////////////////////////////////////////////
