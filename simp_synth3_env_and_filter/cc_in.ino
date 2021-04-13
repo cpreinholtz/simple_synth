@@ -245,8 +245,266 @@ void ctrlOsc1LfoVcfmod(){
 
 
             
+////////////////////////////////////////////////////////////////
+//Osc2
+////////////////////////////////////////////////////////////////
+
+void ctrlOsc2Mix(){
+    static byte lastVal =127;
+    lastVal = getNext(lastVal);
+    mixer3.gain(1, m127( lastVal) );
+}
 
 
+void ctrlOsc2Detune(){
+    static byte lastVal =0;
+    lastVal = getNext(lastVal);
+    kDetune = lastVal;  
+    setAllOsc2Freq(getFreqFromDetune());
+}
+
+
+
+
+void ctrlOsc2Sub0Mix(){
+    static byte lastVal =127; 
+    lastVal = getNext(lastVal);  
+    mixer11.gain(0,m127((lastVal)) );
+}
+void ctrlOsc2Sub1Mix(){
+    static byte lastVal =127;
+    lastVal = getNext(lastVal);
+    mixer11.gain(1, m127((lastVal)) );
+}
+void ctrlOsc2Sub2Mix(){
+    static byte lastVal =127;
+    lastVal = getNext(lastVal);
+    mixer11.gain(2,m127((lastVal)) );
+}
+void ctrlOsc2Sub3Mix(){
+    static byte lastVal =127;
+    lastVal = getNext(lastVal);
+    mixer11.gain(3,m127((lastVal)) );
+}
+
+
+void ctrlOsc2VcaAttack(){
+    static byte lastVal =0;
+    lastVal = getNext(lastVal);
+    envelope3.attack( 2000 * m127((lastVal)) );
+}     
+void ctrlOsc2VcaDecay(){
+    static byte lastVal =10;
+    lastVal = getNext(lastVal);
+    envelope3.decay(  2000 * m127((lastVal)) );
+}         
+void ctrlOsc2VcaSustain(){
+    static byte lastVal =10;
+    lastVal = getNext(lastVal);
+    envelope3.sustain(m127((lastVal)) );
+}       
+void ctrlOsc2VcaRelease(){
+    static byte lastVal =10;
+    lastVal = getNext(lastVal);
+    envelope3.release( 2000 * m127((lastVal)));
+}
+
+
+void ctrlOsc2FilterCutoff(){
+    static byte lastVal =63;
+    lastVal = getNext(lastVal);
+    filter2SetFreqFromVal((lastVal));
+}
+
+void ctrlOsc2FilterResonance(){
+    static byte lastVal =0;
+    lastVal = getNext(lastVal);
+    filter2.resonance(m127((lastVal)));
+}
+
+void ctrlOsc2FilterVcfAmmount(){
+    static byte lastVal =0;
+    lastVal = getNext(lastVal);
+    filter2SetAmmountFromVal((lastVal));
+}
+
+void ctrlOsc2FilterVcfAttack   (){
+    static byte lastVal =10;
+    lastVal = getNext(lastVal);
+    envelope4.attack( 2000 * m127((lastVal)) );           
+}
+void ctrlOsc2FilterVcfDecay  (){
+    static byte lastVal =10;
+    lastVal = getNext(lastVal);
+    envelope4.decay(  2000 * m127((lastVal)) ); 
+}
+void ctrlOsc2FilterVcfSustain   (){
+    static byte lastVal =10;
+    lastVal = getNext(lastVal);
+    envelope4.sustain(m127((lastVal)) );
+}
+void ctrlOsc2FilterVcfRelease(){
+    static byte lastVal =10;
+    lastVal = getNext(lastVal);
+    envelope4.release( 2000 * m127((lastVal)) );   
+}
+
+////////////////////////////////////////////////////////////////
+//LFO1
+////////////////////////////////////////////////////////////////
+
+
+
+void ctrlOsc2LfoAmmount(){
+    static byte lastVal =0;
+    lastVal = getNext(lastVal);
+    sine2.amplitude(m127(lastVal));
+}
+
+void ctrlOsc2LfoFrequency(){
+    static byte lastVal =10;
+    lastVal = getNext(lastVal);
+    sine2.frequency(60 * m127(lastVal));
+}
+
+void ctrlOsc2LfoFmod1(){
+    static byte lastVal =0;
+    lastVal = getNext(lastVal);
+    amp6.gain(m127(lastVal));
+}
+
+void ctrlOsc2LfoFmod2(){
+    static byte lastVal =0;
+    lastVal = getNext(lastVal);
+    amp7.gain(m127(lastVal));
+}
+void ctrlOsc2LfoFmod3(){
+    static byte lastVal =0;
+    lastVal = getNext(lastVal);
+    amp8.gain(m127(lastVal));
+}
+
+void ctrlOsc2LfoSmod2(){
+    static byte lastVal =0;
+    lastVal = getNext(lastVal);
+    amp9.gain(m127(lastVal));
+}
+
+void ctrlOsc2LfoVcfmod(){
+    static byte lastVal =0;
+    lastVal = getNext(lastVal);
+    mixer12.gain(1,m127(lastVal) );
+}       
+
+
+
+///////////////////////////////////////////////
+//EFFECTS DRY
+///////////////////////////////////////////////
+void ctrlFxDryAmmount(){
+    static byte lastVal =63;
+    lastVal = getNext(lastVal);
+    amp13.gain(m127(lastVal));
+}    
+
+void ctrlFxDryPan(){
+    static byte lastVal =63;
+    lastVal = getNext(lastVal);
+    mixer2.gain(0,1.0- m127(lastVal));
+    mixer4.gain(0, m127(lastVal));
+}    
+
+///////////////////////////////////////////////
+//EFFECTS Rvb
+///////////////////////////////////////////////
+
+void ctrlFxReverbAmmount(){
+    static byte lastVal =0;
+    lastVal = getNext(lastVal);
+    amp11.gain( m127(lastVal));
+    amp12.gain(m127(lastVal));
+}    
+
+void ctrlFxReverbPan(){
+    static byte lastVal =63;
+    lastVal = getNext(lastVal);
+    mixer2.gain(1,1.0- m127(lastVal));
+    mixer4.gain(1, m127(lastVal));
+}    
+
+void ctrlFxReverbSize(){
+    static byte lastVal =63;
+    lastVal = getNext(lastVal);
+    freeverbs1.roomsize( m127(lastVal));
+}    
+
+void ctrlFxReverbDamping(){
+    static byte lastVal =63;
+    lastVal = getNext(lastVal);
+    freeverbs1.damping( m127(lastVal));
+}    
+
+
+
+
+
+
+///////////////////////////////////////////////
+//EFFECTS BC
+///////////////////////////////////////////////
+
+void ctrlFxBcAmount(){
+    static byte lastVal =0;
+    lastVal = getNext(lastVal);
+    amp10.gain(m127(lastVal));
+}  
+    
+void ctrlFxBcPan(){
+    static byte lastVal =63;
+    lastVal = getNext(lastVal);
+    mixer2.gain(2,1.0- m127(lastVal));
+    mixer4.gain(2, m127(lastVal));
+}  
+
+void ctrlFxBcRate(){
+    static byte lastVal =63;
+    lastVal = getNext(lastVal);
+    bitcrusher1.sampleRate((int) (44000* m127(lastVal) ) );
+}    
+
+void ctrlFxBcBits(){
+    static byte lastVal =63;
+    lastVal = getNext(lastVal);
+    bitcrusher1.bits( (int)( 16*(1.0- m127(lastVal) ) )  );
+}    
+
+///////////////////////////////////////////////
+//EFFECTS Delay
+///////////////////////////////////////////////
+void ctrlFxDelayAmount(){
+    static byte lastVal =0;
+    lastVal = getNext(lastVal);
+    amp14.gain(m127(lastVal));
+}  
+    
+void ctrlFxDelayPan(){
+    static byte lastVal =63;
+    lastVal = getNext(lastVal);
+    mixer2.gain(3,1.0- m127(lastVal));
+    mixer4.gain(3, m127(lastVal));
+}  
+
+void ctrlFxDelayFeedback(){
+    static byte lastVal =63;
+    lastVal = getNext(lastVal);
+    mixer5.gain(3, 0.9* m127(lastVal));
+}  
+
+void ctrlFxDelaySpeed(){
+    static byte lastVal =63;
+    lastVal = getNext(lastVal);
+    delay1.delay(0, 1000.0* (1.01 - m127(lastVal) ) );
+}  
 
 ////////////////////////////////////////////////////////////////
 //Pages
@@ -268,16 +526,30 @@ tCcHandlerList handleMePlease [] = {
         ctrlOsc1FilterVcfAttack,    ctrlOsc1FilterVcfDecay,     ctrlOsc1FilterVcfSustain,       ctrlOsc1FilterVcfRelease
     },
     {
-        ctrlOsc1LfoAmmount, ctrlOsc1LfoFrequency,  ctrlOsc1LfoSmod2, ctrlOsc1LfoSmod3,
-        ctrlOsc1LfoFmod1, ctrlOsc1LfoFmod2, ctrlOsc1LfoFmod3,  ctrlOsc1LfoVcfmod,
-        noop, noop, noop, noop,
-        noop, noop, noop, noop
+        ctrlOsc2Sub0Mix,            ctrlOsc2Sub1Mix,            ctrlOsc2Sub2Mix,                ctrlOsc2Sub3Mix, 
+        ctrlOsc2VcaAttack,          ctrlOsc2VcaDecay,           ctrlOsc2VcaSustain,             ctrlOsc2VcaRelease,
+        ctrlOsc2Detune,             ctrlOsc2FilterCutoff,       ctrlOsc2FilterResonance,        ctrlOsc2FilterVcfAmmount,
+        ctrlOsc2FilterVcfAttack,    ctrlOsc2FilterVcfDecay,     ctrlOsc2FilterVcfSustain,       ctrlOsc2FilterVcfRelease
+    }, //ctrlOsc2Mix unused!
+    
+    {
+        ctrlOsc1LfoAmmount,         ctrlOsc1LfoFrequency,       ctrlOsc1LfoSmod2,               ctrlOsc1LfoSmod3,
+        ctrlOsc1LfoFmod1,           ctrlOsc1LfoFmod2,           ctrlOsc1LfoFmod3,               ctrlOsc1LfoVcfmod,
+        ctrlOsc2LfoAmmount,         ctrlOsc2LfoFrequency,       ctrlOsc2LfoSmod2,               noop,
+        ctrlOsc2LfoFmod1,           ctrlOsc2LfoFmod2,           ctrlOsc2LfoFmod3,               ctrlOsc2LfoVcfmod,
+    },
+    {
+        ctrlFxDryAmmount,           ctrlFxDryPan,               ctrlOsc1LfoAmmount,             ctrlOsc2LfoAmmount,
+        ctrlFxReverbAmmount,        ctrlFxReverbPan,            ctrlFxReverbDamping,            ctrlFxReverbSize,
+        ctrlFxBcAmount,             ctrlFxBcPan,                ctrlFxBcRate,                   ctrlFxBcBits,
+        ctrlFxDelayAmount,          ctrlFxDelayPan,             ctrlFxDelayFeedback,            ctrlFxDelaySpeed
     }
 
 };
 
-//ctrlOsc1LfoAmmount, ctrlOsc1LfoFrequency,  ctrlOsc1LfoSmod2, ctrlOsc1LfoSmod3,
-//ctrlOsc1LfoFmod1, ctrlOsc1LfoFmod2, ctrlOsc1LfoFmod3,  ctrlOsc1LfoVcfmod
+
+
+
 
 
 void ccHandler(byte ch, byte ctrl, byte val){
@@ -320,275 +592,6 @@ void setDefaults(){
             handleMePlease[page][ctrlKnob]();
         }
     }
+
+    ctrlOsc2Mix();
 }
-
-
-
-
-
-
-
-
-
-
-/*
-
-////////////////////////////////////////////////////////////////
-// OSC 2
-////////////////////////////////////////////////////////////////
-void ctrlOsc2Mix(byte ch, byte ctrl, byte kVal){
-    mixer3.gain(1,((float)kVal)/127.0 );
-}
-
-
-void ctrlOsc2SubMix(byte ch, byte ctrl, byte kVal, int wave){
-    mixer11.gain(wave,((float)kVal)/127.0 );
-}
-
-void ctrlOsc2Detune(byte ch, byte ctrl, byte kVal){
-    kDetune = kVal;  
-    setAllOsc2Freq(getFreqFromDetune());
-}
-
-
-
-            
-            
-///////////////////////////////////////////////
-//VCA
-///////////////////////////////////////////////
-        case CTRL_VCA_A:
-            envelope1.attack( 2000 * ((float)kVal)/127.0 );
-            break;      
-        case CTRL_VCA_D:
-            envelope1.decay(  2000 * ((float)kVal)/127.0 );
-            break;      
-        case CTRL_VCA_S:
-            envelope1.sustain(((float)kVal)/127.0 );
-            break;      
-        case CTRL_VCA_R:
-            envelope1.release( 2000 * ((float)kVal)/127.0 );
-            break;
-
-///////////////////////////////////////////////
-//VCA 2
-///////////////////////////////////////////////
-        case CTRL_2VCA_A:
-            envelope3.attack( 2000 * ((float)kVal)/127.0 );
-            break;      
-        case CTRL_2VCA_D:
-            envelope3.decay(  2000 * ((float)kVal)/127.0 );
-            break;      
-        case CTRL_2VCA_S:
-            envelope3.sustain(((float)kVal)/127.0 );
-            break;      
-        case CTRL_2VCA_R:
-            envelope3.release( 2000 * ((float)kVal)/127.0 );
-            break;
-
-
-///////////////////////////////////////////////
-//FILTER 2
-///////////////////////////////////////////////
-        case CTRL_2FILT_CUTOFF:
-            filter2SetFreqFromVal(kVal);
-            break;
-        case CTRL_2VCF_AMNT:
-            filter2SetAmmountFromVal(kVal);
-            break;     
-        case CTRL_2VCF_A:
-            envelope2.attack( 2000 * ((float)kVal)/127.0 );
-            break;      
-        case CTRL_2VCF_D:
-            envelope2.decay(  2000 * ((float)kVal)/127.0 );
-            break;      
-        case CTRL_2VCF_S:
-            envelope2.sustain(((float)kVal)/127.0 );
-            break;      
-        case CTRL_2VCF_R:
-            envelope2.release( 2000 * ((float)kVal)/127.0 );
-            break;
-
-///////////////////////////////////////////////
-//EFFECTS DRY
-///////////////////////////////////////////////
-        case CTRL_FX_DRY_MIX_L:
-            mixer2.gain(0, (float)kVal/127.0);
-            break;
-        case CTRL_FX_DRY_MIX_R:
-            mixer4.gain(0, (float)kVal/127.0);
-            break;
-
-
-///////////////////////////////////////////////
-//EFFECTS REVERB
-///////////////////////////////////////////////
-        case CTRL_FX_REVERB_SIZE:
-            freeverbs1.roomsize((float)kVal/127.0);
-            break;
-        case CTRL_FX_REVERB_DAMP:
-            freeverbs1.damping((float)kVal/127.0);
-            break;            
-        case CTRL_FX_REVERB_MIX_L:
-            mixer2.gain(1, (float)kVal/127.0);
-            break;
-        case CTRL_FX_REVERB_MIX_R:
-            mixer4.gain(1,(float)kVal/127.0);
-            break;
-            
-
-
-
-///////////////////////////////////////////////
-//EFFECTS BC
-///////////////////////////////////////////////
-   
-        case CTRL_FX_BC_MIX_L:
-            mixer2.gain(2, (float)kVal/127.0);
-            break;
-        case CTRL_FX_BC_MIX_R:
-            mixer4.gain(2, (float)kVal/127.0);
-            break;     
-        case CTRL_FX_BC_BITS:
-            bitcrusher1.bits( (int)(16*(float)kVal/127.0));
-            break;
-        case CTRL_FX_BC_RATE:
-            bitcrusher1.sampleRate( (int)(44000*(float)kVal/127.0) );
-            break;
-
-///////////////////////////////////////////////
-//EFFECTS Delay
-///////////////////////////////////////////////
-            
-
-        case CTRL_FX_DLYMIX_L:
-            mixer2.gain(3, (float)kVal/127.0);
-            break;
-        case CTRL_FX_DLYMIX_R:
-            mixer4.gain(3, (float)kVal/127.0);
-            break;
-
-        case CTRL_FX_DLY1_S:
-            delay1.delay(0, DELAY_SCALE* (float)kVal/127.0);
-            break;
-        case CTRL_FX_DLY1_L:
-            mixer5.gain(0, (float)kVal/127.0);
-            break;
-        case CTRL_FX_DLY1_R:
-            mixer7.gain(0, (float)kVal/127.0);
-            break;
-
-        case CTRL_FX_DLY2_S:
-            delay1.delay(1, DELAY_SCALE* (float)kVal/127.0);
-            break;
-        case CTRL_FX_DLY2_L:
-            mixer5.gain(1, (float)kVal/127.0);
-            break;
-        case CTRL_FX_DLY2_R:
-            mixer7.gain(1, (float)kVal/127.0);
-            break;
-
-        case CTRL_FX_DLY3_S:
-            delay1.delay(2, DELAY_SCALE* (float)kVal/127.0);
-            break;
-        case CTRL_FX_DLY3_L:
-            mixer5.gain(2, (float)kVal/127.0);
-            break;
-        case CTRL_FX_DLY3_R:
-            mixer7.gain(2, (float)kVal/127.0);
-            break;
-
-        case CTRL_FX_DLY4_S:
-            delay1.delay(3, DELAY_SCALE* (float)kVal/127.0);
-            break;
-        case CTRL_FX_DLY4_L:
-            mixer5.gain(3, (float)kVal/127.0);
-            break;
-        case CTRL_FX_DLY4_R:
-            mixer7.gain(3, (float)kVal/127.0);
-            break;
-
-        case CTRL_FX_DLY5_S:
-            delay1.delay(4, DELAY_SCALE* (float)kVal/127.0);
-            break;
-        case CTRL_FX_DLY5_L:
-            mixer6.gain(0, (float)kVal/127.0);
-            break;
-        case CTRL_FX_DLY5_R:
-            mixer8.gain(0, (float)kVal/127.0);
-            break;
-
-        case CTRL_FX_DLY6_S:
-            delay1.delay(5, DELAY_SCALE* (float)kVal/127.0);
-            break;
-        case CTRL_FX_DLY6_L:
-            mixer6.gain(1, (float)kVal/127.0);
-            break;
-        case CTRL_FX_DLY6_R:
-            mixer8.gain(1, (float)kVal/127.0);
-            break;
-
-        case CTRL_FX_DLY7_S:
-            delay1.delay(6, DELAY_SCALE* (float)kVal/127.0);
-            break;
-        case CTRL_FX_DLY7_L:
-            mixer6.gain(2, (float)kVal/127.0);
-            break;
-        case CTRL_FX_DLY7_R:
-            mixer8.gain(2, (float)kVal/127.0);
-            break;
-
-        case CTRL_FX_DLY8_S:
-            delay1.delay(7, DELAY_SCALE* (float)kVal/127.0);
-            break;
-        case CTRL_FX_DLY8_L:
-            mixer6.gain(3, (float)kVal/127.0);
-            break;
-        case CTRL_FX_DLY8_R:
-            mixer8.gain(3, (float)kVal/127.0);
-            break;
-
-
-
-///////////////////////////////////////////////
-//LFO 2
-///////////////////////////////////////////////
-        case CTRL_2LFO_A:
-            sine2.amplitude(((float)kVal)/127.0);
-            break;
-        case CTRL_2LFO_F:
-            sine2.frequency(60 * ((float)kVal)/127.0);
-            break;     
-                        
-        case CTRL_2LFO_FMOD1:
-            amp6.gain(((float)kVal)/127.0 );
-            break;  
-        case CTRL_2LFO_FMOD2:
-            amp7.gain(((float)kVal)/127.0 );
-            break;    
-        case CTRL_2LFO_FMOD3:
-            amp8.gain(((float)kVal)/127.0 );
-            break;    
-            
-        case CTRL_2LFO_SMOD2:
-            amp9.gain(((float)kVal)/127.0 );
-            break;    
-                  
-        case CTRL_2LFO_VCFMOD:
-            mixer12.gain(1,((float)kVal)/127.0 );
-            break; 
-///////////////////////////////////////////////
-//DEFAULT
-///////////////////////////////////////////////
-        default:
-#ifdef DEBUG_ENABLE
-            Serial.println("default switch");
-#endif       
-            break;
-            
-  }  
-}
-
-
-
-*/
