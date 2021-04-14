@@ -14,6 +14,13 @@ byte kVal=0x40;
 byte kCtrl;
 int kPage =1;
 
+byte d1M;
+byte d1O;
+byte d2M;
+byte d2O;
+byte d3M;
+byte d3O;
+
 //how many knobs are on yer controller
 const int CTRL_PER_PAGE = 16;
 const int NUM_PADS = 8;
@@ -513,40 +520,88 @@ void ctrlDrum1Amplitude(){
     lastVal = getNext(lastVal);
     ampDrum1.gain( m127(lastVal) );
 }  
-
-
-
-
 void ctrlDrum1Frequency(){
     static byte lastVal =20;
     lastVal = getNext(lastVal);
     drum1.frequency( midiLookUp[lastVal]);
     
 }
-
-
-
-
-void ctrlDrum1Length(){
+void ctrlDrum1Mod(){
     static byte lastVal =10;
     lastVal = getNext(lastVal);
-    drum1.length(1000*m127(lastVal) );
+    d1M = 1+ (byte) ( (float)stepsPerEpoch*(1.0-m127(lastVal))); 
+
+    Serial.println("d1M");     
+    Serial.println(d1M);     
+}
+
+void ctrlDrum1Offset(){
+    static byte lastVal =10;
+    lastVal = getNext(lastVal);
+    d1O = (byte) ( (float)stepsPerEpoch*m127(lastVal));  
+    Serial.println("d1O");     
+    Serial.println(d1O);  
+}
+
+
+void ctrlDrum2Amplitude(){
+    static byte lastVal =0;
+    lastVal = getNext(lastVal);
+    ampDrum2.gain( m127(lastVal) );
+    noise1.amplitude(m127(lastVal));
+}  
+void ctrlDrum2Frequency(){
+    static byte lastVal =20;
+    lastVal = getNext(lastVal);
+    drum2.frequency( midiLookUp[lastVal]);
     
 }
-
-void ctrlDrum1Pan(){
-    static byte lastVal =63;
+void ctrlDrum2Mod(){
+    static byte lastVal =10;
     lastVal = getNext(lastVal);
-    //mixerDrum1L.gain(1, 1.0- m127(lastVal) );
-    mixerFinalL.gain(0, 1.0- m127(lastVal) );
-    //mixerDrum1R.gain(1, 1.0- m127(lastVal) );
-    mixerFinalR.gain(0,  m127(lastVal) );
+    d2M = 1+ (byte) ( (float)stepsPerEpoch*(1.0-m127(lastVal)));        
+}
 
+void ctrlDrum2Offset(){
+    static byte lastVal =10;
+    lastVal = getNext(lastVal);
+    d2O = (byte) ( (float)stepsPerEpoch*m127(lastVal));    
 }
 
 
 
+void ctrlDrum3Amplitude(){
+    static byte lastVal =0;
+    lastVal = getNext(lastVal);
+    noise2.amplitude(m127(lastVal));
+}  
 
+void ctrlDrum3Length(){
+    static byte lastVal =10;
+    lastVal = getNext(lastVal);
+    envelopeD3.attack(10*m127(lastVal) );
+    envelopeD3.decay(100*m127(lastVal) );
+}
+
+
+
+void ctrlDrum3Mod(){
+    static byte lastVal =10;
+    lastVal = getNext(lastVal);
+    d3M = 1+ (byte) ( (float)stepsPerEpoch*(1.0-m127(lastVal)));       
+}
+
+void ctrlDrum3Offset(){
+    static byte lastVal =10;
+    lastVal = getNext(lastVal);
+    d3O = (byte) ( (float)stepsPerEpoch*m127(lastVal));    
+}
+
+void ctrlBpm(){
+    static byte lastVal =40;
+    lastVal = getNext(lastVal);
+    setBpm(( (int)lastVal+1 )*2 );
+}
 
 ////////////////////////////////////////////////////////////////
 //Pages
@@ -587,10 +642,10 @@ tCcHandlerList handleMePlease [] = {
         ctrlFxDelayAmount,          ctrlFxDelayPan,             ctrlFxDelayFeedback,            ctrlFxDelaySpeed
     },
     {
-        ctrlDrum1Amplitude,         ctrlDrum1Frequency,         ctrlDrum1Length,                ctrlDrum1Pan ,
-        noop,                       noop,                       noop,                           noop,
-        noop,                       noop,                       noop,                           noop,
-        noop,                       noop,                       noop,                           noop,
+        ctrlDrum1Amplitude,         ctrlDrum1Frequency,         ctrlDrum1Mod,                   ctrlDrum1Offset,
+        ctrlDrum2Amplitude,         ctrlDrum2Frequency,         ctrlDrum2Mod,                   ctrlDrum2Offset,
+        ctrlDrum3Amplitude,         ctrlDrum3Length,            ctrlDrum3Mod,                   ctrlDrum3Offset,
+        ctrlBpm,                    noop,                       noop,                           noop
     }
 
 };
@@ -649,11 +704,11 @@ void setDefaults(){
     mixerFinalL.gain(1, 1.0 );
     mixerFinalR.gain(1, 1.0 );
 
-    mixerFinalL.gain(2, 0.0 );
-    mixerFinalR.gain(2, 0.0 );
+    mixerFinalL.gain(2, 1.0 );
+    mixerFinalR.gain(2, 1.0 );
     
-    mixerFinalL.gain(3, 0.0 );
-    mixerFinalR.gain(3, 0.0 );
+    mixerFinalL.gain(3, 1.0 );
+    mixerFinalR.gain(3, 1.0 );
 
 
     //filter env (controlled by DC)
@@ -663,4 +718,13 @@ void setDefaults(){
 
     //bank osc mix  //ctrlOsc2Mix(); ctrlOsc1Mix();
     mixer13.gain(0, 1.0);    mixer13.gain(1, 1.0);     mixer13.gain(2, 0.0);     mixer13.gain(3, 0.0);
+
+    envelopeD3.sustain(0.0);
+    envelopeD3.delay(0.0);
+    envelopeD3.hold(0.0);
+
+    combine1.setCombineMode(AudioEffectDigitalCombine::AND);
+    drum1.length(100);
+    drum2.length(75);
+    
 }

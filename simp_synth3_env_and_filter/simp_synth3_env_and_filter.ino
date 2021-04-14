@@ -48,8 +48,14 @@ AudioAmplifier           amp10; //xy=1822.6986083984375,412.69847869873047
 AudioMixer4              mixer2; //xy=1947.1311569213867,186.0595588684082
 AudioAmplifier           amp14; //xy=1968.889030456543,649.8413467407227
 AudioMixer4              mixer4; //xy=2217.9169998168945,411.3095817565918
+AudioSynthNoiseWhite     noise1;         //xy=2300.6666564941406,337.66666412353516
+AudioSynthSimpleDrum     drum2; //xy=2306.666816711426,286.6666650772095
 AudioSynthSimpleDrum     drum1;          //xy=2329.269847869873,234.76195335388184
-AudioAmplifier           ampDrum1;           //xy=2504.3334884643555,249.66667938232422
+AudioSynthNoiseWhite     noise2;         //xy=2356.666820526123,378.6666660308838
+AudioAmplifier           ampDrum2; //xy=2471.333251953125,267.6666564941406
+AudioEffectEnvelope      envelopeD3;      //xy=2534.6666564941406,367.66666412353516
+AudioAmplifier           ampDrum1;           //xy=2604.3336486816406,229.66667938232422
+AudioEffectDigitalCombine combine1;       //xy=2628.6666564941406,290.6666650772095
 AudioMixer4              mixerFinalL; //xy=3231.333251953125,59.66666793823242
 AudioMixer4              mixerFinalR; //xy=3242.333251953125,379.6666564941406
 AudioOutputAnalogStereo  dacs1;          //xy=3323.9289016723633,199.76204299926758
@@ -115,12 +121,22 @@ AudioConnection          patchCord59(mixer2, 0, mixerFinalL, 1);
 AudioConnection          patchCord60(amp14, 0, mixer2, 3);
 AudioConnection          patchCord61(amp14, 0, mixer4, 3);
 AudioConnection          patchCord62(mixer4, 0, mixerFinalR, 1);
-AudioConnection          patchCord63(drum1, ampDrum1);
-AudioConnection          patchCord64(ampDrum1, 0, mixerFinalL, 0);
-AudioConnection          patchCord65(ampDrum1, 0, mixerFinalR, 0);
-AudioConnection          patchCord66(mixerFinalL, 0, dacs1, 0);
-AudioConnection          patchCord67(mixerFinalR, 0, dacs1, 1);
+AudioConnection          patchCord63(noise1, 0, combine1, 1);
+AudioConnection          patchCord64(drum2, ampDrum2);
+AudioConnection          patchCord65(drum1, ampDrum1);
+AudioConnection          patchCord66(noise2, envelopeD3);
+AudioConnection          patchCord67(ampDrum2, 0, combine1, 0);
+AudioConnection          patchCord68(envelopeD3, 0, mixerFinalL, 3);
+AudioConnection          patchCord69(envelopeD3, 0, mixerFinalR, 3);
+AudioConnection          patchCord70(ampDrum1, 0, mixerFinalL, 0);
+AudioConnection          patchCord71(ampDrum1, 0, mixerFinalR, 0);
+AudioConnection          patchCord72(combine1, 0, mixerFinalL, 2);
+AudioConnection          patchCord73(combine1, 0, mixerFinalR, 2);
+AudioConnection          patchCord74(mixerFinalL, 0, dacs1, 0);
+AudioConnection          patchCord75(mixerFinalR, 0, dacs1, 1);
 // GUItool: end automatically generated code
+
+
 
 
 
@@ -143,120 +159,7 @@ float midiLookUp[127];
 
 //CONTROL CHANNELS
 const byte CTRL_MASTER_FREQ = 99;
-
-const byte CTRL_OSC1_MIX = 16;
-const byte CTRL_SAW_MIX = 100;
-const byte CTRL_SQ_MIX = 101;
-const byte CTRL_SIN_MIX = 102;
-const byte CTRL_NOISE_MIX = 103;
-
-
-const byte CTRL_VCA_A = 109;
-const byte CTRL_VCA_D = 110;
-const byte CTRL_VCA_S = 111;
-const byte CTRL_VCA_R = 112;
-
-const byte CTRL_FILT_CUTOFF = 104;
-
-const byte CTRL_VCF_A = 113;
-const byte CTRL_VCF_D = 114;
-const byte CTRL_VCF_S = 115;
-const byte CTRL_VCF_R = 116;
-const byte CTRL_VCF_AMNT = 117;
-
-
-const byte CTRL_LFO_F = 118;
-const byte CTRL_LFO_A = 119;
-const byte CTRL_LFO_FMOD1 = 120;
-const byte CTRL_LFO_FMOD2 = 121;
-const byte CTRL_LFO_FMOD3 = 122;
-const byte CTRL_LFO_SMOD2 = 123;
-const byte CTRL_LFO_SMOD3 = 124;
-const byte CTRL_LFO_VCFMOD = 125;
-
-const byte CTRL_OSC2_MIX = 17;
-const byte CTRL_2SIN_DISTORT = 18;
-const byte CTRL_DETUNE_FREQ = 19;
-const byte CTRL_2SAW_MIX = 20;
-const byte CTRL_2SQ_MIX = 21;
-const byte CTRL_2SIN_MIX = 22;
-const byte CTRL_2NOISE_MIX = 23;
-
-const byte CTRL_2VCA_A = 24;
-const byte CTRL_2VCA_D = 25;
-const byte CTRL_2VCA_S = 26;
-const byte CTRL_2VCA_R = 27;
-
-const byte CTRL_2FILT_CUTOFF = 28;
-
-const byte CTRL_2VCF_A = 30;
-const byte CTRL_2VCF_D = 31;
-const byte CTRL_2VCF_S = 32;
-const byte CTRL_2VCF_R = 33;
-const byte CTRL_2VCF_AMNT = 34;
-
-
-const byte CTRL_2LFO_F = 35;
-const byte CTRL_2LFO_A = 36;
-const byte CTRL_2LFO_FMOD1 = 37;
-const byte CTRL_2LFO_FMOD2 = 38;
-const byte CTRL_2LFO_FMOD3 = 39;
-const byte CTRL_2LFO_SMOD2 = 40;
-const byte CTRL_2LFO_VCFMOD = 41;
-
-
-
-
-const byte CTRL_FX_DRY_MIX_L = 99;
-const byte CTRL_FX_DRY_MIX_R = 98;
-
-const byte CTRL_FX_BC_MIX_L = 97;
-const byte CTRL_FX_BC_MIX_R = 96;
-const byte CTRL_FX_BC_BITS = 95;
-const byte CTRL_FX_BC_RATE = 94;
-
-
-const byte CTRL_FX_REVERB_MIX_L = 93;
-const byte CTRL_FX_REVERB_MIX_R = 92;
-const byte CTRL_FX_REVERB_SIZE = 91;
-const byte CTRL_FX_REVERB_DAMP = 90;
-
-
-const byte CTRL_FX_DLYMIX_L = 58;
-const byte CTRL_FX_DLYMIX_R = 59;
-
-const byte CTRL_FX_DLY1_S = 60;
-const byte CTRL_FX_DLY1_L = 61;
-const byte CTRL_FX_DLY1_R = 62;
-
-const byte CTRL_FX_DLY2_S = 63;
-const byte CTRL_FX_DLY2_L = 64;
-const byte CTRL_FX_DLY2_R = 65;
-
-const byte CTRL_FX_DLY3_S = 66;
-const byte CTRL_FX_DLY3_L = 67;
-const byte CTRL_FX_DLY3_R = 68;
-
-const byte CTRL_FX_DLY4_S = 69;
-const byte CTRL_FX_DLY4_L = 70;
-const byte CTRL_FX_DLY4_R = 71;
-
-const byte CTRL_FX_DLY5_S = 72;
-const byte CTRL_FX_DLY5_L = 73;
-const byte CTRL_FX_DLY5_R = 74;
-
-const byte CTRL_FX_DLY6_S = 75;
-const byte CTRL_FX_DLY6_L = 76;
-const byte CTRL_FX_DLY6_R = 77;
-
-const byte CTRL_FX_DLY7_S = 78;
-const byte CTRL_FX_DLY7_L = 79;
-const byte CTRL_FX_DLY7_R = 80;
-
-const byte CTRL_FX_DLY8_S = 81;
-const byte CTRL_FX_DLY8_L = 82;
-const byte CTRL_FX_DLY8_R = 83;
-
+const int ledPin = 13;
 
 
 
@@ -402,6 +305,8 @@ void setup() {
     usbMIDI.setHandleControlChange(ccHandler);
     usbMIDI.setHandleNoteOn(handleNoteOn);
     usbMIDI.setHandleNoteOff(handleNoteOff);
+    // initialize the digital pin as an output.
+    pinMode(ledPin, OUTPUT);
     AudioMemory(400);
 
     mixer13.gain(0, 1.0);
