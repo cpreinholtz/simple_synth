@@ -32,12 +32,12 @@ void checkTime(){
     unsigned long currentMicros = micros();
 
     if (currentMicros - lastEpochMicros >= (nextStep+1) * microsPerStep){
-        Serial.println("step");
-        Serial.println(nextStep);
-        Serial.println(stepsPerEpoch);
+        //Serial.println("step");
+        //Serial.println(nextStep);
+        //Serial.println(stepsPerEpoch);
         activateStep();
         nextStep = (nextStep + 1) % stepsPerEpoch;
-        Serial.println(nextStep);
+        //Serial.println(nextStep);
         if (nextStep==0){
             lastEpochMicros = currentMicros;
             
@@ -47,8 +47,8 @@ void checkTime(){
 }
 
 void activateStep(){
-Serial.println("(nextStep+d1O) %d1M");
-Serial.println( (nextStep+d1O) %d1M);
+//Serial.println("(nextStep+d1O) %d1M");
+//Serial.println( (nextStep+d1O) %d1M);
   digitalWrite(ledPin, HIGH);   // set the LED on
     if ( (nextStep) %stepsPerQuater ==0 ){
         digitalWrite(ledPin, HIGH);   // set the LED 

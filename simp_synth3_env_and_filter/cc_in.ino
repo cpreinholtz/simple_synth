@@ -406,7 +406,7 @@ void ctrlOsc2LfoVcfmod(){
 //EFFECTS DRY
 ///////////////////////////////////////////////
 void ctrlFxDryAmmount(){
-    static byte lastVal =63;
+    static byte lastVal =120;
     lastVal = getNext(lastVal);
     amp13.gain(m127(lastVal));
 }    
@@ -527,7 +527,7 @@ void ctrlDrum1Frequency(){
     
 }
 void ctrlDrum1Mod(){
-    static byte lastVal =10;
+    static byte lastVal =82;
     lastVal = getNext(lastVal);
     d1M = 1+ (byte) ( (float)stepsPerEpoch*(1.0-m127(lastVal))); 
 
@@ -536,7 +536,7 @@ void ctrlDrum1Mod(){
 }
 
 void ctrlDrum1Offset(){
-    static byte lastVal =10;
+    static byte lastVal =32;
     lastVal = getNext(lastVal);
     d1O = (byte) ( (float)stepsPerEpoch*m127(lastVal));  
     Serial.println("d1O");     
@@ -557,7 +557,7 @@ void ctrlDrum2Frequency(){
     
 }
 void ctrlDrum2Mod(){
-    static byte lastVal =10;
+    static byte lastVal =107;
     lastVal = getNext(lastVal);
     d2M = 1+ (byte) ( (float)stepsPerEpoch*(1.0-m127(lastVal)));        
 }
@@ -586,21 +586,21 @@ void ctrlDrum3Length(){
 
 
 void ctrlDrum3Mod(){
-    static byte lastVal =10;
+    static byte lastVal =66;
     lastVal = getNext(lastVal);
     d3M = 1+ (byte) ( (float)stepsPerEpoch*(1.0-m127(lastVal)));       
 }
 
 void ctrlDrum3Offset(){
-    static byte lastVal =10;
+    static byte lastVal =23;
     lastVal = getNext(lastVal);
     d3O = (byte) ( (float)stepsPerEpoch*m127(lastVal));    
 }
 
 void ctrlBpm(){
-    static byte lastVal =40;
+    static byte lastVal =20;
     lastVal = getNext(lastVal);
-    setBpm(( (int)lastVal+1 )*2 );
+    setBpm( ( 40+(int)lastVal )  *2 );
 }
 
 ////////////////////////////////////////////////////////////////
@@ -701,14 +701,17 @@ void setDefaults(){
     //this stuff never changes, is not part of any page
 
 
-    mixerFinalL.gain(1, 1.0 );
-    mixerFinalR.gain(1, 1.0 );
+    mixerFinalL.gain(0, 1.0 );
+    mixerFinalR.gain(0, 1.0 );
 
-    mixerFinalL.gain(2, 1.0 );
-    mixerFinalR.gain(2, 1.0 );
+    mixerFinalL.gain(1, 0.70 );
+    mixerFinalR.gain(1, 0.70 );
+
+    mixerFinalL.gain(2, 0.3 );
+    mixerFinalR.gain(2, 0.3 );
     
-    mixerFinalL.gain(3, 1.0 );
-    mixerFinalR.gain(3, 1.0 );
+    mixerFinalL.gain(3, 0.3 );
+    mixerFinalR.gain(3, 0.3 );
 
 
     //filter env (controlled by DC)
