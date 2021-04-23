@@ -6,9 +6,7 @@ float midiLookUp[127];
 
 
 
-void dbg(char * printMe){
-    Serial.println(printMe);
-}
+
 
 
 void initLookupTable(){

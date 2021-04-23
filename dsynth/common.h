@@ -12,7 +12,7 @@ extern float midiLookUp[127];
 ///////////////////////////
 //Defs
 ///////////////////////////
-
+#define dbg(A) (Serial.println(A))
 
 ///////////////////////////
 //Functions
@@ -24,6 +24,6 @@ byte getNext(byte lastVal);
 
 float m127(byte val);
 
-void dbg(char * printMe);
+
 
 #endif 

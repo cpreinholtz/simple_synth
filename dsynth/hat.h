@@ -18,6 +18,8 @@ void ctrlHatLastStep();
 void ctrlHatNumStep();
 void ctrlHatOffset();
 
+
+void ctrlHatVolume();
 void ctrlHatRes();
 void ctrlHatLpCut();
 void ctrlHatLpEnvAmnt();

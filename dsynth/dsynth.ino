@@ -83,6 +83,8 @@ void setup() {
     initLookupTable();//common
     setDefaults();//cc in
 
+    setupOcto();
+
 }
 
 

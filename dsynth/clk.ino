@@ -1,10 +1,11 @@
 #include "common.h"
+#include "octo.h"
 
 const int stepsPerQuater = 4;
 const int quatersPerEpoch = 4;
 const int stepsPerEpoch = stepsPerQuater * quatersPerEpoch;
 
-unsigned long nextStep = 0;
+unsigned long nextStep = stepsPerEpoch;
 
 //unsigned long microsPerEpoch = bpm * 60 *1000000;
 
@@ -48,7 +49,7 @@ void checkTime(){
     if (currentMicros - lastStepMicros >= microsPerStep){
 
         activateStep();
-
+        show();
         lastStepMicros = currentMicros;
         nextStep = nextStep + 1;
     }    

@@ -87,8 +87,12 @@ tCcHandlerList handleMePlease [] = {
         noop,                       noop,                       noop,                           noop
     },
     {
-        ctrlHatMod,                 ctrlHatFirstStep,           ctrlHatLastStep,                ctrlHatPoly,
-        ctrlHatNumStep,             ctrlHatOffset, noop,                       noop, 
+        ctrlHatMod,  ctrlHatOffset,  ctrlHatVolume,  noop,          noop,       ctrlHatFirstStep,    ctrlHatLastStep,   ctrlHatNumStep,  
+        
+        
+        
+  
+
         ctrlHatRes,                       ctrlHatLpCut,                       ctrlHatLpEnvAmnt,                           ctrlHatLpEnvDecay,
         ctrlHatHpCut,                       ctrlHatDecay,                       noop,                           noop,
 
