@@ -115,8 +115,8 @@ AudioConnection          patchCord57(mixerFinalR, 0, dacs1, 1);
 //#include <ADC.h>
 //#include <ADC_util.h>
 
-//#include "timer.h"
-
+#include "util.h"
+#include "voice.h"
 
 
 
@@ -124,6 +124,14 @@ AudioConnection          patchCord57(mixerFinalR, 0, dacs1, 1);
 ///////////////////////////////////////////////
 //SETUP / LOOP
 ///////////////////////////////////////////////
+bool gNoteOn [128];
+float glideTimeMillis;
+float gLastFrequency = 100;
+float gDetune;
+
+Voice voice1(& waveformMod3Osc1Voice1, & waveformMod4Osc1Voice1, &  waveformMod1Osc1Voice1, & waveformMod2Osc1Voice1,
+    & waveformMod3Osc2Voice1, & waveformMod4Osc2Voice1, &  waveformMod1Osc2Voice1, & waveformMod2Osc2Voice1
+);
 
 
 void setup() {
@@ -135,12 +143,68 @@ void setup() {
 
     setConstantSettings();    
     initKnobPoller();
+    initLookupTable();
+    for( int i=0; i<128 ; i++){
+        gNoteOn[i] = false;
+    }
 }
 
 
 
 
+
+//with this scheme we get a new envelope every time a new note is hit,
+//and the envelope realses only when that new note is released
+void handleNoteOn(byte channel, byte note, byte velocity){
+    Serial.println("note on");
+    voice1.noteOn(channel, note, velocity);
+    voice1.setStepFreuequency(true);
+
+
+    int totalOn = 0;
+    for( unsigned int i = 0 ; i< ARRAY_SIZE(gNoteOn); i++){
+        if (gNoteOn[i]) {
+            totalOn = totalOn+1;
+        }
+    }    
+    if(totalOn ==0) {//todo update when I have more voices
+        envelopeVcf.noteOn();
+        envelopeVoice1.noteOn();
+    }
+    gNoteOn[note] = true;  
+        
+    
+}
+
+
+void handleNoteOff( byte channel, byte note, byte velocity){
+    Serial.println("note off");
+    gNoteOn[note] = false;
+
+    //search
+    int firstTrue = -1;
+    for( unsigned int i = 0 ; i< ARRAY_SIZE(gNoteOn); i++){
+        if (gNoteOn[i]) {
+            firstTrue=i;            
+        }
+    }
+    
+    //decide if continuing or what
+    if(firstTrue ==-1) {//todo update when I have more voices
+        envelopeVcf.noteOff();
+        envelopeVoice1.noteOff();
+    } else {
+        voice1.noteOn( channel,  note,  velocity);
+        voice1.setStepFreuequency(true);        
+    }
+
+    
+}
+
+
+
 void loop() {
     //usbMIDI.read();
-    serviceKnobPoller();    
+    serviceKnobPoller();   
+    voice1.setStepFreuequency(); 
 }

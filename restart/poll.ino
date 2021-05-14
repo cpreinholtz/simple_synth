@@ -23,13 +23,13 @@ const int s8c = 35;
 const int s64a = 37;
 const int s64b = 38;
 const int s64c = 39;
-const int kIn = A17;
+const int kIn = A13;
 
 int gThisPin=0;
 int gThisChip=0;
 
 //
-const unsigned long kPollingPeriodMicros = 50;//1000000;  //50 uS nominal
+const unsigned long kPollingPeriodMicros = 500000;//1000000;  //50 uS nominal
 
 ///////////////////////////////////
 //functions
@@ -54,7 +54,7 @@ void initKnobPoller(){
 
     knobTimer.setPeriodMicros(kPollingPeriodMicros);
     dbg("init knobs");
-    for (int i =0; i<  ARRAY_SIZE(myKnobs); i++ ){
+    for (unsigned int i =0; i<  ARRAY_SIZE(myKnobs); i++ ){
         setChipAndPin(i);
         setSelect(gThisChip,gThisPin);
         while (1){
@@ -140,7 +140,7 @@ int getIndex(int chip, int pin){
 }
 
 //chip, pin from knobIndex
-int setChipAndPin(int thisIndex){
+void setChipAndPin(int thisIndex){
     gThisChip = thisIndex / 8;
     gThisPin = thisIndex % 8;
 }

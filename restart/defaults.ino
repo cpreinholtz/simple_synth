@@ -1,6 +1,6 @@
 void setConstantSettings(){  
     //no set
-    
+
     //Oscilators
     waveformMod1Osc1Voice1.begin(1.0, 200, WAVEFORM_SAWTOOTH);
     waveformMod2Osc1Voice1.begin(1.0, 200, WAVEFORM_SQUARE);

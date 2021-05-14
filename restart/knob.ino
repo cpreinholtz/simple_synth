@@ -1,11 +1,11 @@
 #include "util.h"
+#include "voice.h"
 
 float gVal;
 
+const float kEnvScale = 2.5;
 
 
-
-pinkVoice
 
 ////////////////////////////////////////////////
 //0.7
@@ -19,7 +19,7 @@ void setOsc1Amp(){
 void setOsc1Shape(){
     dbg("Osc1Shape");
     dbg(gVal);
-    dcOsc1Shape.amplitude(gVal);
+   // dcOsc1Shape.amplitude(gVal);  //TODO
 }
 
 //0.5
@@ -68,14 +68,14 @@ void setOsc2Amp(){
     dbg("setOsc2Amp");
     dbg(gVal);
     //dcOsc2Shape.amplitude(gVal);
-    mixerVoice1.gain(1,gVal)
+    mixerVoice1.gain(1,gVal);
 }
 
 //4.2
 void setOsc2Shape(){
     dbg("Osc2Shape");
-    dbg(gVal);
-    dcOsc2Shape.amplitude(gVal);
+    dbg(gVal); //TODO
+    //dcOsc2Shape.amplitude(gVal);
 }
 
 
@@ -83,6 +83,7 @@ void setOsc2Shape(){
 void setOsc2Detune(){
     dbg("setOsc2Detune");
     dbg(gVal);
+    gDetune = gVal;
     //dcOsc2Shape.amplitude(gVal); //todo
 }
 
@@ -236,7 +237,8 @@ void setRvbDepth(){
 void setRvbMix(){
     dbg("setRvbMix");
     dbg(gVal);
-    ampRvb.gain(gVal);
+    ampRvbL.gain(gVal);
+    ampRvbR.gain(gVal);
 }
 //1.2
 void setRvbPan(){
@@ -257,7 +259,7 @@ void setDlyRate(){
 void setDlyDepth(){
     dbg("setDlyDepth");
     dbg(gVal);
-    mixerDelayFb.gain(3, gval);
+    mixerDelayFb.gain(3, gVal);
 }
 //3.5
 void setDlyMix(){
@@ -295,7 +297,7 @@ void setDryPan(){
 tHandlerList myKnobs = {
 
 //0.0 - 0.7
-setBcDepth, setVcaRelease, setVcaSustain, setVcaDecay ,setVcaAttavk, setVcaVelocity, setOsc1Shape, setOsc1Amp,
+setBcDepth, setVcaRelease, setVcaSustain, setVcaDecay ,setVcaAttack, setVcaVelocity, setOsc1Shape, setOsc1Amp,
 
 //1.0 - 1.7
 setLfo1Speed, setLfo2Speed, setRvbPan, setRvbMix, setRvbDepth, setRvbRate, setBcPan, setBcMix,
