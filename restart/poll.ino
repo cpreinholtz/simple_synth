@@ -17,13 +17,13 @@ float lastVals [ARRAY_SIZE(myKnobs)];
 //constants
 ///////////////////////////////////
 //pins
-const int s8a = 0;
-const int s8b = 1;
-const int s8c = 2;
-const int s64a = 3;
-const int s64b = 4;
-const int s64c = 5;
-const int kIn = A1;
+const int s8a = 33;
+const int s8b = 34;
+const int s8c = 35;
+const int s64a = 37;
+const int s64b = 38;
+const int s64c = 39;
+const int kIn = A17;
 
 int gThisPin=0;
 int gThisChip=0;
